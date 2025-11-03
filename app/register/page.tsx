@@ -21,9 +21,10 @@ interface UserFormData {
   gender: string;
   weight: number | null;
   height: number | null;
-  goal: string;
+  goal: number | null;
   availableDays: number | null;
   trainingLocation: string;
+  exercicesPerDay: number | null;
 }
 
 export default function RegisterPage() {
@@ -35,9 +36,10 @@ export default function RegisterPage() {
     gender: "",
     weight: null,
     height: null,
-    goal: "",
+    goal: null,
     availableDays: null,
     trainingLocation: "",
+    exercicesPerDay: null,
   });
   const [is_loading, set_is_loading] = useState(true);
   const is_initialized_ref = useRef(false);
@@ -50,18 +52,35 @@ export default function RegisterPage() {
 
     // Atualizar apenas se houver diferenças para evitar re-renders desnecessários
     if (saved_form_data) {
+      // Migração: converter goal de string para number se necessário
+      const migrated_data: UserFormData = {
+        ...saved_form_data,
+        goal:
+          typeof saved_form_data.goal === "string"
+            ? saved_form_data.goal === "Hipertrofia"
+              ? 1
+              : saved_form_data.goal === "Emagrecimento"
+              ? 2
+              : saved_form_data.goal === "Disfunção Sexual" ||
+                saved_form_data.goal === "Disfunção Erétil"
+              ? 3
+              : null
+            : saved_form_data.goal,
+      };
+      
       set_form_data((prev) => {
         // Verificar se os dados são diferentes antes de atualizar
         const has_changes =
-          prev.name !== saved_form_data.name ||
-          prev.age !== saved_form_data.age ||
-          prev.gender !== saved_form_data.gender ||
-          prev.weight !== saved_form_data.weight ||
-          prev.height !== saved_form_data.height ||
-          prev.goal !== saved_form_data.goal ||
-          prev.availableDays !== saved_form_data.availableDays ||
-          prev.trainingLocation !== saved_form_data.trainingLocation;
-        return has_changes ? saved_form_data : prev;
+          prev.name !== migrated_data.name ||
+          prev.age !== migrated_data.age ||
+          prev.gender !== migrated_data.gender ||
+          prev.weight !== migrated_data.weight ||
+          prev.height !== migrated_data.height ||
+          prev.goal !== migrated_data.goal ||
+          prev.availableDays !== migrated_data.availableDays ||
+          prev.trainingLocation !== migrated_data.trainingLocation ||
+          prev.exercicesPerDay !== migrated_data.exercicesPerDay;
+        return has_changes ? migrated_data : prev;
       });
     }
     if (

@@ -18,9 +18,10 @@ interface StepFourProps {
     gender: string;
     weight: number | null;
     height: number | null;
-    goal: string;
+    goal: number | null;
     availableDays: number | null;
     trainingLocation: string;
+    exercicesPerDay: number | null;
   };
   update_form_data: (field: string, value: string | number | null) => void;
   prev_step: () => void;
@@ -37,7 +38,8 @@ export function StepFour({
   const [error, set_error] = useState<string | null>(null);
   const router = useRouter();
 
-  const is_valid = form_data.trainingLocation !== "";
+  const is_valid =
+    form_data.trainingLocation !== "" && form_data.exercicesPerDay !== null;
 
   const handle_submit = async () => {
     if (!is_valid) return;
@@ -52,18 +54,19 @@ export function StepFour({
         gender: form_data.gender,
         weight: form_data.weight!,
         height: form_data.height!,
-        goal: form_data.goal,
+        goal: form_data.goal!,
         availableDays: form_data.availableDays!,
         trainingLocation: form_data.trainingLocation,
+        exercicesPerDay: form_data.exercicesPerDay!,
       };
 
       const created_user = await createUser(user_data);
-      
+
       // Guardar o ID do usuário criado para usar no pagamento
       if (created_user?.id) {
         save_user_id(created_user.id);
       }
-      
+
       // NÃO limpar os dados do formulário aqui
       // Os dados serão limpos apenas quando o pagamento for APPROVED ou EXPIRED
       router.push("/payment");
@@ -99,6 +102,35 @@ export function StepFour({
             </button>
           ))}
         </div>
+      </div>
+
+      <div>
+        <label className="block text-white font-semibold mb-4">
+          Quantos exercícios por treino você prefere?
+        </label>
+        <div className="grid grid-cols-3 sm:flex sm:flex-wrap sm:justify-center gap-3 sm:gap-2">
+          {[3, 4, 5, 6, 7, 8].map((count) => (
+            <button
+              key={count}
+              onClick={() => update_form_data("exercicesPerDay", count)}
+              disabled={is_loading}
+              className={`w-full sm:w-14 sm:h-14 h-14 rounded-lg border-2 transition-all text-lg sm:text-base font-bold cursor-pointer flex items-center justify-center ${
+                form_data.exercicesPerDay === count
+                  ? "border-cyan-500 bg-cyan-500/10 text-cyan-400"
+                  : "border-gray-700 text-gray-400 hover:border-cyan-500/50"
+              } ${is_loading ? "opacity-50 cursor-not-allowed" : ""}`}
+            >
+              {count}
+            </button>
+          ))}
+        </div>
+        <p className="text-gray-500 text-sm mt-3 text-center">
+          {form_data.exercicesPerDay
+            ? `${form_data.exercicesPerDay} ${
+                form_data.exercicesPerDay === 1 ? "exercício" : "exercícios"
+              } por treino`
+            : "Selecione a quantidade"}
+        </p>
       </div>
 
       {error && (

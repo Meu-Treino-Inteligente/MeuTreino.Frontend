@@ -4,9 +4,10 @@ interface UserFormData {
   gender: string;
   weight: number | null;
   height: number | null;
-  goal: string;
+  goal: number | null;
   availableDays: number | null;
   trainingLocation: string;
+  exercicesPerDay: number | null;
 }
 
 const STORAGE_KEY_FORM_DATA = "register_form_data";

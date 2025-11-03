@@ -2,10 +2,11 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { GoalType } from "@/types/users/user.types";
 
 interface StepThreeProps {
   form_data: {
-    goal: string;
+    goal: number | null;
     availableDays: number | null;
   };
   update_form_data: (field: string, value: string | number | null) => void;
@@ -13,7 +14,11 @@ interface StepThreeProps {
   prev_step: () => void;
 }
 
-const goals = ["Hipertrofia", "Emagrecimento", "Disfunção Erétil"];
+const goals = [
+  { value: GoalType.Hipertrofia, label: "Hipertrofia" },
+  { value: GoalType.Emagrecimento, label: "Emagrecimento" },
+  { value: GoalType.DisfuncaoSexual, label: "Disfunção Sexual" },
+];
 
 export function StepThree({
   form_data,
@@ -21,7 +26,7 @@ export function StepThree({
   next_step,
   prev_step,
 }: StepThreeProps) {
-  const is_valid = form_data.goal !== "" && form_data.availableDays !== null;
+  const is_valid = form_data.goal !== null && form_data.availableDays !== null;
 
   return (
     <div className="space-y-6">
@@ -32,15 +37,15 @@ export function StepThree({
         <div className="grid grid-cols-2 gap-3">
           {goals.map((goal) => (
             <button
-              key={goal}
-              onClick={() => update_form_data("goal", goal)}
+              key={goal.value}
+              onClick={() => update_form_data("goal", goal.value)}
               className={`px-4 py-3 rounded-lg border-2 transition-all text-sm font-semibold cursor-pointer ${
-                form_data.goal === goal
+                form_data.goal === goal.value
                   ? "border-cyan-500 bg-cyan-500/10 text-cyan-400"
                   : "border-gray-700 text-gray-400 hover:border-cyan-500/50"
               }`}
             >
-              {goal}
+              {goal.label}
             </button>
           ))}
         </div>

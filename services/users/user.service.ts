@@ -6,6 +6,7 @@ import {
   ListUsersResponse,
   UpdateUserResponse,
   ListUsersParams,
+  UserSiteResponse,
 } from "@/types/users/user.types";
 import { apiRequest } from "@/utils/api";
 
@@ -61,7 +62,9 @@ export async function listUsers(
     queryParams.append("pageSize", params.pageSize.toString());
   }
   const queryString = queryParams.toString();
-  const url = queryString ? `/api/list/users?${queryString}` : "/api/list/users";
+  const url = queryString
+    ? `/api/list/users?${queryString}`
+    : "/api/list/users";
 
   return apiRequest<ListUsersResponse>(
     url,
@@ -115,3 +118,15 @@ export async function deleteUser(
   );
 }
 
+export async function getUserSiteBySlug(
+  slug: string,
+  config?: { baseUrl?: string; headers?: Record<string, string> }
+): Promise<UserSiteResponse> {
+  return apiRequest<UserSiteResponse>(
+    `/api/get/user-site/${slug}`,
+    {
+      method: "GET",
+    },
+    config
+  );
+}
