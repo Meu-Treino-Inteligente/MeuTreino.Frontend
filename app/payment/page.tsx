@@ -121,14 +121,14 @@ export default function PaymentPage() {
               // Ainda pendente - restaurar e exibir QR Code automaticamente
               set_pix_code(saved_payment.pix_code);
               set_pix_qrcode(saved_payment.pix_qrcode);
-              
+
               // Usar expiresAt da API se disponível, senão usar o salvo
               if (status_response.data.expiresAt) {
                 set_expires_at(new Date(status_response.data.expiresAt));
               } else {
                 set_expires_at(new Date(saved_payment.expires_at));
               }
-              
+
               set_selected_method("pix");
 
               // Restaurar dados do formulário do pagamento
@@ -159,7 +159,7 @@ export default function PaymentPage() {
           }
         } catch (error) {
           console.error("Erro ao verificar status do pagamento:", error);
-          
+
           // Em caso de erro, verificar se ainda não expirou localmente
           if (!is_pix_payment_expired(saved_payment)) {
             // Assumir que ainda está pendente e restaurar
@@ -175,8 +175,10 @@ export default function PaymentPage() {
             set_email(saved_payment.customer.email);
             set_cpf(saved_payment.customer.cpf);
             if (saved_payment.customer.cellphone) {
-              const phone_formatted =
-                saved_payment.customer.cellphone.replace(/\D/g, "");
+              const phone_formatted = saved_payment.customer.cellphone.replace(
+                /\D/g,
+                ""
+              );
               if (phone_formatted.length === 11) {
                 set_cellphone(
                   `(${phone_formatted.slice(0, 2)}) ${phone_formatted.slice(
@@ -918,7 +920,8 @@ export default function PaymentPage() {
           }`}
           style={{
             maxHeight: is_summary_expanded ? "85vh" : "100px",
-            transition: "max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+            transition:
+              "max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >
           {/* Header do Drawer - Sempre Visível */}
@@ -977,7 +980,7 @@ export default function PaymentPage() {
                             Plano de treino único
                           </h4>
                           <p className="text-gray-400 text-sm">
-                            Treino personalizado criado especialmente para você
+                            Treino personalizado criado exclusivamente para você
                           </p>
                         </div>
                       </div>

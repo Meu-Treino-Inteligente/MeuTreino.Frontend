@@ -16,7 +16,11 @@ import {
   faLightbulb,
   faCalendarWeek,
   faCheckCircle,
+  faRefresh,
+  faDownload,
 } from "@fortawesome/free-solid-svg-icons";
+import { TrainingPDFDocument } from "./components/training-pdf";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const dayNames = {
   monday: "Segunda-feira",
@@ -81,10 +85,15 @@ export default function UserTrainingPage() {
         <HeaderNavigation />
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
-            <p className="text-red-400 text-lg mb-4">
-              {error || "Treino não encontrado"}
-            </p>
+            <p className="text-red-400 text-lg mb-4">Treino não encontrado.</p>
             <p className="text-gray-400">Verifique se o link está correto.</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-6 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-white font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all mt-4"
+            >
+              <FontAwesomeIcon icon={faRefresh} className="mr-2" />
+              Tentar novamente
+            </button>
           </div>
         </div>
         <FooterSection />
@@ -115,8 +124,22 @@ export default function UserTrainingPage() {
             </span>
           </h1>
           <p className="text-gray-400 text-sm sm:text-base md:text-lg mt-4">
-            Criado especialmente para você
+            Criado exclusivamente para você
           </p>
+          <div className="mt-6">
+            <PDFDownloadLink
+              document={<TrainingPDFDocument trainingPlan={trainingPlan} />}
+              fileName={`treino-${slug}.pdf`}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-white font-bold hover:shadow-xl hover:shadow-cyan-500/50 transition-all transform hover:scale-105"
+            >
+              {({ loading }: { loading: boolean }) => (
+                <>
+                  <FontAwesomeIcon icon={faDownload} />
+                  {loading ? "Carregando..." : "Baixar PDF"}
+                </>
+              )}
+            </PDFDownloadLink>
+          </div>
         </div>
 
         {/* Semana */}
