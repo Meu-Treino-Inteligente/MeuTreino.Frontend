@@ -67,9 +67,7 @@ export function StepFour({
         save_user_id(created_user.id);
       }
 
-      // NÃO limpar os dados do formulário aqui
-      // Os dados serão limpos apenas quando o pagamento for APPROVED ou EXPIRED
-      router.push("/payment");
+      router.push("/plans");
     } catch (err) {
       const error_message =
         err instanceof Error

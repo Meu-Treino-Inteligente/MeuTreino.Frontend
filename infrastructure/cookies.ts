@@ -100,7 +100,7 @@ export function clear_user_id(): void {
   }
 }
 
-interface PixPaymentData {
+export interface PixPaymentData {
   pix_code: string;
   pix_qrcode: string;
   expires_at: string;

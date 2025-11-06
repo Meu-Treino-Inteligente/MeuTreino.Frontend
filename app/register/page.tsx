@@ -50,7 +50,7 @@ export default function RegisterPage() {
     const saved_form_data = load_register_form_data();
     const saved_step = load_register_current_step();
 
-    // Atualizar apenas se houver diferenças para evitar re-renders desnecessários
+    // Carregar dados salvos do localStorage
     if (saved_form_data) {
       // Migração: converter goal de string para number se necessário
       const migrated_data: UserFormData = {
@@ -67,21 +67,8 @@ export default function RegisterPage() {
               : null
             : saved_form_data.goal,
       };
-      
-      set_form_data((prev) => {
-        // Verificar se os dados são diferentes antes de atualizar
-        const has_changes =
-          prev.name !== migrated_data.name ||
-          prev.age !== migrated_data.age ||
-          prev.gender !== migrated_data.gender ||
-          prev.weight !== migrated_data.weight ||
-          prev.height !== migrated_data.height ||
-          prev.goal !== migrated_data.goal ||
-          prev.availableDays !== migrated_data.availableDays ||
-          prev.trainingLocation !== migrated_data.trainingLocation ||
-          prev.exercicesPerDay !== migrated_data.exercicesPerDay;
-        return has_changes ? migrated_data : prev;
-      });
+
+      set_form_data(migrated_data);
     }
     if (
       saved_step &&
@@ -100,9 +87,25 @@ export default function RegisterPage() {
   }, []);
 
   // Salvar form_data sempre que mudar (após inicialização)
+  // Mas não salvar se os dados estiverem vazios (para evitar sobrescrever dados válidos)
   useEffect(() => {
     if (is_initialized_ref.current) {
-      save_register_form_data(form_data);
+      // Verificar se há pelo menos um campo preenchido antes de salvar
+      // Isso evita sobrescrever dados válidos salvos com dados vazios
+      const has_data =
+        form_data.name.trim() !== "" ||
+        form_data.age !== null ||
+        form_data.gender.trim() !== "" ||
+        form_data.weight !== null ||
+        form_data.height !== null ||
+        form_data.goal !== null ||
+        form_data.availableDays !== null ||
+        form_data.trainingLocation.trim() !== "" ||
+        form_data.exercicesPerDay !== null;
+
+      if (has_data) {
+        save_register_form_data(form_data);
+      }
     }
   }, [form_data]);
 

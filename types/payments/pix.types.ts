@@ -3,7 +3,8 @@ import { CreateCustomerRequest } from "./customer.types";
 
 export interface CreatePixQrcodeRequest {
   userId: number; // OBRIGATÓRIO - ID retornado ao criar o usuário
-  amount: number; // OBRIGATÓRIO - Valor em centavos
+  planId: number; // OBRIGATÓRIO - ID do plano selecionado
+  couponCode?: string; // Opcional - Código do cupom de desconto
   expiresIn?: number; // Opcional - Tempo de expiração em segundos (padrão: 3600)
   description?: string; // Opcional
   customer: CreateCustomerRequest; // OBRIGATÓRIO
@@ -27,4 +28,3 @@ export interface PixQrcodeData {
 export type CreatePixQrcodeResponse = ApiResponse<PixQrcodeData>;
 export type GetPixQrcodeResponse = ApiResponse<PixQrcodeData>;
 export type CreatePixQrcodeErrorResponse = ErrorResponse;
-
