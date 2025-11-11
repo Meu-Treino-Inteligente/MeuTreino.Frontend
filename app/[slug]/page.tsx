@@ -12,12 +12,12 @@ import {
   faDumbbell,
   faClock,
   faUtensils,
-  faChartLine,
   faLightbulb,
   faCalendarWeek,
   faCheckCircle,
   faRefresh,
   faDownload,
+  faChartLine,
 } from "@fortawesome/free-solid-svg-icons";
 import { TrainingPDFDocument } from "./components/training-pdf";
 import { PDFDownloadLink } from "@react-pdf/renderer";
@@ -126,7 +126,7 @@ export default function UserTrainingPage() {
           <p className="text-gray-400 text-sm sm:text-base md:text-lg mt-4">
             Criado exclusivamente para você
           </p>
-          <div className="mt-6">
+          <div className="mt-6 flex flex-col sm:flex-row gap-4 items-center justify-center">
             <PDFDownloadLink
               document={<TrainingPDFDocument trainingPlan={trainingPlan} />}
               fileName={`treino-${slug}.pdf`}

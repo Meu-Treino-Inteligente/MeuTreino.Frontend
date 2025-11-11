@@ -61,10 +61,10 @@ export type UpdateUserErrorResponse = ErrorResponse;
 
 // Response para o endpoint /api/get/user-site/{slug}
 export interface UserSiteResponse {
-  id: number;
   userId: number;
+  userTrainingId: number;
+  slug: string;
   jsonTreino: TrainingPlan | string; // API pode retornar como string JSON ou objeto
-  createdAt: string;
 }
 
 export interface ListUsersParams {
