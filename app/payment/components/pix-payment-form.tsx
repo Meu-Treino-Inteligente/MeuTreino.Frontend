@@ -95,7 +95,7 @@ export function PixPaymentForm({
       {/* Campo Email */}
       <div>
         <label className="block text-white text-sm font-semibold mb-2">
-          Email <span className="text-red-400">*</span>
+          Email (para receber o treino) <span className="text-red-400">*</span>
         </label>
         <input
           type="email"

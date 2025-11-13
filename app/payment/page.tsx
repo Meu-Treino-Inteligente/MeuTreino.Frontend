@@ -30,10 +30,7 @@ import {
   format_phone,
   unformat_phone,
 } from "@/utils/validation";
-import {
-  load_user_id,
-  clear_register_session,
-} from "@/infrastructure/cookies";
+import { load_user_id, clear_register_session } from "@/infrastructure/cookies";
 
 export default function PaymentPage() {
   // ========== CONSTANTES ==========
@@ -178,8 +175,8 @@ export default function PaymentPage() {
         set_payment_status(current_status);
 
         // Tratar diferentes status
-        // Status possíveis: PENDING, APPROVED, EXPIRED
-        if (current_status === "APPROVED") {
+        // Status possíveis: PENDING, APPROVED, PAID, EXPIRED
+        if (current_status === "APPROVED" || current_status === "PAID") {
           // Pagamento aprovado - limpar dados e redirecionar para sucesso
           clear_register_session(); // Limpar dados do formulário de registro
           window.location.href = "/success";

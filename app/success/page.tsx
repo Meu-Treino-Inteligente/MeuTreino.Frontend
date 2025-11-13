@@ -15,11 +15,11 @@ export default function SuccessPage() {
           />
         </div>
         <h1 className="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-          Perfil Criado!
+          Sucesso!
         </h1>
         <p className="text-gray-400 text-lg mb-8">
-          Seu perfil foi criado com sucesso. Agora você pode gerar seu plano de
-          treino personalizado.
+          A Nossa inteligência artificial está trabalhando em seu treino, em
+          questão de segundos você vai receber no email seu treino personalizado.
         </p>
         <Link
           href="/"
