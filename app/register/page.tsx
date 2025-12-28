@@ -5,6 +5,7 @@ import { StepOne } from "./components/step-one/step-one";
 import { StepTwo } from "./components/step-two/step-two";
 import { StepThree } from "./components/step-three/step-three";
 import { StepFour } from "./components/step-four/step-four";
+import { TrainingPreview } from "./components/training-preview/training-preview";
 import { HeaderNavigation } from "../components/header-navigation/header-navigation";
 import { FooterSection } from "../components/footer-section/footer-section";
 import {
@@ -155,45 +156,68 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a]">
       <HeaderNavigation />
-      <div className="flex items-center justify-center py-20 px-4 pt-32">
-        <div className="w-full max-w-2xl">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+      <div className="container mx-auto px-4 pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-12 md:pb-16">
+        {/* Mobile: Stacked Layout */}
+        <div className="lg:hidden space-y-6">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl sm:text-4xl font-black mb-2 bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent">
               Crie Seu Perfil
             </h1>
-            <p className="text-gray-400 text-lg">{get_step_title()}</p>
+            <p className="text-gray-400 text-sm sm:text-base">{get_step_title()}</p>
           </div>
 
-          <div className="mb-8">
-            <div className="flex items-center justify-center mb-4 px-2">
+          {/* Progress Indicator Mobile */}
+          <div className="mb-6">
+            <div className="flex items-center justify-center mb-3 px-2">
               {[1, 2, 3, 4].map((step) => (
                 <div key={step} className="flex items-center">
-                  <div
-                    className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-sm md:text-base font-bold transition-all ${
-                      current_step >= step
-                        ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white"
-                        : "bg-gray-800 text-gray-500 border border-gray-700"
-                    }`}
-                  >
-                    {step}
+                  <div className="relative">
+                    <div
+                      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-black transition-all duration-300 relative z-10 ${
+                        current_step >= step
+                          ? "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white shadow-lg shadow-purple-500/50 scale-105"
+                          : "bg-gray-800/50 text-gray-500 border-2 border-gray-700"
+                      }`}
+                    >
+                      {current_step > step ? (
+                        <span className="text-white text-xs">✓</span>
+                      ) : (
+                        step
+                      )}
+                    </div>
+                    {current_step === step && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 rounded-full blur-xl opacity-50 animate-pulse" />
+                    )}
                   </div>
                   {step < 4 && (
-                    <div
-                      className={`w-6 md:w-16 h-0.5 md:h-1 mx-1 md:mx-2 transition-all ${
-                        current_step > step
-                          ? "bg-gradient-to-r from-cyan-500 to-blue-600"
-                          : "bg-gray-800"
-                      }`}
-                    />
+                    <div className="relative mx-1.5 sm:mx-2">
+                      <div className="w-6 sm:w-8 h-0.5 sm:h-1 bg-gray-800/50 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full transition-all duration-500 ${
+                            current_step > step
+                              ? "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 w-full"
+                              : "w-0"
+                          }`}
+                        />
+                      </div>
+                    </div>
                   )}
                 </div>
               ))}
             </div>
+            <div className="text-center">
+              <div className="inline-block px-3 py-1.5 rounded-full border border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm">
+                <span className="text-purple-300 text-xs sm:text-sm font-semibold">
+                  Passo {current_step} de 4
+                </span>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-cyan-500/20 rounded-2xl p-4 md:p-8 backdrop-blur-sm">
+          {/* Steps Card Mobile */}
+          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 border border-purple-500/30 rounded-xl sm:rounded-2xl p-5 sm:p-6 backdrop-blur-xl shadow-2xl shadow-purple-500/10">
             {current_step === 1 && (
               <StepOne
                 form_data={form_data}
@@ -225,8 +249,114 @@ export default function RegisterPage() {
               />
             )}
           </div>
+
+          {/* Preview Mobile */}
+          <div className="lg:hidden">
+            <TrainingPreview form_data={form_data} />
+          </div>
+        </div>
+
+        {/* Desktop: 50/50 Split Layout */}
+        <div className="hidden lg:grid lg:grid-cols-2 lg:gap-6 lg:items-start">
+          {/* Left: Steps */}
+          <div className="sticky top-24">
+            <div className="text-center mb-6">
+              <h1 className="text-4xl font-black mb-2 bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent">
+                Crie Seu Perfil
+              </h1>
+              <p className="text-gray-400 text-base">{get_step_title()}</p>
+            </div>
+
+            {/* Progress Indicator Desktop */}
+            <div className="mb-6">
+              <div className="flex items-center justify-center mb-3 px-2">
+                {[1, 2, 3, 4].map((step) => (
+                  <div key={step} className="flex items-center">
+                    <div className="relative">
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-black transition-all duration-300 relative z-10 ${
+                          current_step >= step
+                            ? "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white shadow-lg shadow-purple-500/50 scale-105"
+                            : "bg-gray-800/50 text-gray-500 border-2 border-gray-700"
+                        }`}
+                      >
+                        {current_step > step ? (
+                          <span className="text-white text-xs">✓</span>
+                        ) : (
+                          step
+                        )}
+                      </div>
+                      {current_step === step && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 rounded-full blur-xl opacity-50 animate-pulse" />
+                      )}
+                    </div>
+                    {step < 4 && (
+                      <div className="relative mx-2">
+                        <div className="w-10 h-1 bg-gray-800/50 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full transition-all duration-500 ${
+                              current_step > step
+                                ? "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 w-full"
+                                : "w-0"
+                            }`}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div className="text-center">
+                <div className="inline-block px-3 py-1.5 rounded-full border border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm">
+                  <span className="text-purple-300 text-sm font-semibold">
+                    Passo {current_step} de 4
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Steps Card Desktop */}
+            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 border border-purple-500/30 rounded-2xl p-6 backdrop-blur-xl shadow-2xl shadow-purple-500/10">
+              {current_step === 1 && (
+                <StepOne
+                  form_data={form_data}
+                  update_form_data={update_form_data}
+                  next_step={next_step}
+                />
+              )}
+              {current_step === 2 && (
+                <StepTwo
+                  form_data={form_data}
+                  update_form_data={update_form_data}
+                  next_step={next_step}
+                  prev_step={prev_step}
+                />
+              )}
+              {current_step === 3 && (
+                <StepThree
+                  form_data={form_data}
+                  update_form_data={update_form_data}
+                  next_step={next_step}
+                  prev_step={prev_step}
+                />
+              )}
+              {current_step === 4 && (
+                <StepFour
+                  form_data={form_data}
+                  update_form_data={update_form_data}
+                  prev_step={prev_step}
+                />
+              )}
+            </div>
+          </div>
+
+          {/* Right: Preview Desktop */}
+          <div className="sticky top-24">
+            <TrainingPreview form_data={form_data} />
+          </div>
         </div>
       </div>
+      
       <FooterSection />
     </div>
   );

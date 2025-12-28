@@ -4,7 +4,6 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
-  faCheck,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { createUser } from "@/services/users/user.service";
@@ -27,7 +26,10 @@ interface StepFourProps {
   prev_step: () => void;
 }
 
-const locations = ["Casa", "Academia"];
+const locations = [
+  { value: "Casa", icon: "🏠", color: "from-purple-500 to-pink-500" },
+  { value: "Academia", icon: "🏋️", color: "from-orange-500 to-red-500" },
+];
 
 export function StepFour({
   form_data,
@@ -62,12 +64,11 @@ export function StepFour({
 
       const created_user = await createUser(user_data);
 
-      // Guardar o ID do usuário criado para usar no pagamento
       if (created_user?.id) {
         save_user_id(created_user.id);
       }
 
-      router.push("/plans");
+      router.push("/select-plan");
     } catch (err) {
       const error_message =
         err instanceof Error
@@ -79,96 +80,122 @@ export function StepFour({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
+      {/* Local de Treino */}
       <div>
-        <label className="block text-white font-semibold mb-4">
+        <label className="block text-white font-bold mb-3 sm:mb-4 text-sm sm:text-base">
           Onde você prefere treinar?
         </label>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
           {locations.map((location) => (
             <button
-              key={location}
-              onClick={() => update_form_data("trainingLocation", location)}
+              key={location.value}
+              onClick={() => update_form_data("trainingLocation", location.value)}
               disabled={is_loading}
-              className={`px-6 py-4 rounded-lg border-2 transition-all font-semibold cursor-pointer ${
-                form_data.trainingLocation === location
-                  ? "border-cyan-500 bg-cyan-500/10 text-cyan-400"
-                  : "border-gray-700 text-gray-400 hover:border-cyan-500/50"
+              className={`px-4 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border-2 transition-all font-bold text-xs sm:text-sm cursor-pointer relative overflow-hidden group ${
+                form_data.trainingLocation === location.value
+                  ? `border-transparent bg-gradient-to-r ${location.color} text-white shadow-lg shadow-purple-500/30 scale-105`
+                  : "border-gray-700 text-gray-400 hover:border-purple-500/50 hover:bg-gray-800/50"
               } ${is_loading ? "opacity-50 cursor-not-allowed" : ""}`}
             >
-              {location}
+              {form_data.trainingLocation === location.value && (
+                <div className="absolute inset-0 bg-white/10" />
+              )}
+              <span className="relative z-10 flex flex-col items-center gap-2">
+                <span className="text-3xl sm:text-4xl">{location.icon}</span>
+                <span>{location.value}</span>
+              </span>
             </button>
           ))}
         </div>
       </div>
 
+      {/* Exercícios por Treino */}
       <div>
-        <label className="block text-white font-semibold mb-4">
+        <label className="block text-white font-bold mb-3 sm:mb-4 text-sm sm:text-base">
           Quantos exercícios por treino você prefere?
         </label>
-        <div className="grid grid-cols-3 sm:flex sm:flex-wrap sm:justify-center gap-3 sm:gap-2">
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
           {[3, 4, 5, 6, 7, 8].map((count) => (
             <button
               key={count}
               onClick={() => update_form_data("exercicesPerDay", count)}
               disabled={is_loading}
-              className={`w-full sm:w-14 sm:h-14 h-14 rounded-lg border-2 transition-all text-lg sm:text-base font-bold cursor-pointer flex items-center justify-center ${
+              className={`w-full h-12 sm:h-14 rounded-lg sm:rounded-xl border-2 transition-all text-base sm:text-lg font-black cursor-pointer flex items-center justify-center relative overflow-hidden group ${
                 form_data.exercicesPerDay === count
-                  ? "border-cyan-500 bg-cyan-500/10 text-cyan-400"
-                  : "border-gray-700 text-gray-400 hover:border-cyan-500/50"
+                  ? "border-purple-500 bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 shadow-lg shadow-purple-500/30 scale-110"
+                  : "border-gray-700 text-gray-400 hover:border-purple-500/50 hover:bg-gray-800/50"
               } ${is_loading ? "opacity-50 cursor-not-allowed" : ""}`}
             >
-              {count}
+              {form_data.exercicesPerDay === count && (
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10" />
+              )}
+              <span className="relative z-10">
+                {count}
+              </span>
             </button>
           ))}
         </div>
-        <p className="text-gray-500 text-sm mt-3 text-center">
-          {form_data.exercicesPerDay
-            ? `${form_data.exercicesPerDay} ${
-                form_data.exercicesPerDay === 1 ? "exercício" : "exercícios"
-              } por treino`
-            : "Selecione a quantidade"}
+        <p className="text-gray-400 text-sm sm:text-base mt-4 text-center">
+          {form_data.exercicesPerDay ? (
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30">
+              <span className="font-semibold text-purple-300">
+                {form_data.exercicesPerDay}{" "}
+                {form_data.exercicesPerDay === 1 ? "exercício" : "exercícios"} por treino
+              </span>
+            </span>
+          ) : (
+            <span className="text-gray-500">Selecione a quantidade</span>
+          )}
         </p>
       </div>
 
+      {/* Erro */}
       {error && (
-        <div className="p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400">
-          {error}
+        <div className="p-4 bg-red-500/10 border-2 border-red-500/50 rounded-xl text-red-400 flex items-center gap-3">
+          <span className="text-xl">⚠️</span>
+          <span>{error}</span>
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-8">
+      {/* Botões */}
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-6 sm:mt-8">
         <button
           onClick={prev_step}
           disabled={is_loading}
-          className="flex-1 px-4 md:px-6 py-3 md:py-4 rounded-full border-2 border-cyan-500 text-cyan-400 text-sm md:text-base font-bold hover:bg-cyan-500/10 transition-all disabled:opacity-50 cursor-pointer"
+          className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border-2 border-purple-500/50 text-purple-400 text-sm sm:text-base font-bold hover:bg-purple-500/10 hover:border-purple-400 transition-all disabled:opacity-50 cursor-pointer group"
         >
-          <FontAwesomeIcon icon={faArrowLeft} className="mr-2 w-4 h-4" />
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            className="mr-2 w-3 h-3 sm:w-4 sm:h-4 group-hover:-translate-x-1 transition-transform"
+          />
           Voltar
         </button>
         <button
           onClick={handle_submit}
           disabled={!is_valid || is_loading}
-          className={`flex-1 px-4 md:px-6 py-3 md:py-4 rounded-full text-sm md:text-base font-bold transition-all transform cursor-pointer ${
+          className={`flex-1 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl text-sm sm:text-base font-black transition-all transform relative overflow-hidden group ${
             is_valid && !is_loading
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:shadow-xl hover:shadow-cyan-500/50 hover:scale-105"
+              ? "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white hover:shadow-2xl hover:shadow-purple-500/50 hover:scale-105 cursor-pointer"
               : "bg-gray-700 text-gray-500 cursor-not-allowed"
           }`}
         >
-          {is_loading ? (
-            <>
-              <FontAwesomeIcon
-                icon={faSpinner}
-                className="mr-2 w-4 h-4 animate-spin"
-              />
-              Enviando...
-            </>
-          ) : (
-            <>
-              Enviar informações
-              <FontAwesomeIcon icon={faCheck} className="ml-2 w-4 h-4" />
-            </>
+          {is_valid && !is_loading && (
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-pink-700 to-orange-700 opacity-0 group-hover:opacity-100 transition-opacity" />
           )}
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            {is_loading ? (
+              <>
+                <FontAwesomeIcon
+                  icon={faSpinner}
+                  className="mr-2 w-4 h-4 animate-spin"
+                />
+                Enviando...
+              </>
+            ) : (
+              <>Enviar informações</>
+            )}
+          </span>
         </button>
       </div>
     </div>

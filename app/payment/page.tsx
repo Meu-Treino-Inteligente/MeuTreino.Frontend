@@ -435,34 +435,42 @@ export default function PaymentPage() {
   }, [payment_id, payment_status, selected_method]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a] text-white">
       <HeaderNavigation />
-      <div className="py-20 px-4 pt-32 pb-24 lg:pb-16">
-        <div className="container mx-auto max-w-6xl">
+      <div className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 pt-20 sm:pt-24 md:pt-28 pb-20 sm:pb-24 md:pb-28">
+        <div className="container mx-auto max-w-7xl">
           {/* Header */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cyan-500/10 mb-6">
-              <FontAwesomeIcon
-                icon={faDumbbell}
-                className="text-3xl text-cyan-400"
-              />
+          <div className="mb-8 md:mb-10">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/30 to-transparent"></div>
+              <span className="text-xs font-semibold text-purple-400 uppercase tracking-wider">
+                Checkout
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/30 to-transparent"></div>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              Finalize sua Compra
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-2 leading-tight">
+              <span className="block text-white">Finalize sua Compra</span>
             </h1>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Você está a um passo de transformar seu corpo com um plano de
-              treino personalizado criado por inteligência artificial
+            <p className="text-gray-400 text-sm sm:text-base">
+              Complete seu pagamento de forma segura e rápida
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Main Content - Payment Methods */}
             <div className="lg:col-span-2 space-y-6">
-              <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-cyan-500/20 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
-                <h2 className="text-2xl font-bold text-white mb-6">
-                  Método de Pagamento
-                </h2>
+              <div className="bg-gradient-to-br from-gray-900/90 via-gray-900/80 to-black/90 border border-purple-500/30 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 backdrop-blur-xl shadow-2xl shadow-purple-500/5">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-purple-500/30">
+                    <FontAwesomeIcon
+                      icon={faDumbbell}
+                      className="text-lg text-purple-400"
+                    />
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-bold text-white">
+                    Método de Pagamento
+                  </h2>
+                </div>
 
                 <PaymentMethodSelection
                   selectedMethod={selected_method}
@@ -474,7 +482,7 @@ export default function PaymentPage() {
 
                 {/* PIX Payment Details */}
                 {selected_method === "pix" && (
-                  <div className="mt-8 pt-8 border-t border-gray-700">
+                  <div className="mt-8 pt-8 border-t border-gray-700/50">
                     {!pix_qrcode ? (
                       <PixPaymentForm
                         name={name}
@@ -505,7 +513,7 @@ export default function PaymentPage() {
                       <div className="flex flex-col items-center justify-center py-12">
                         <FontAwesomeIcon
                           icon={faSpinner}
-                          className="text-5xl text-cyan-400 animate-spin mb-4"
+                          className="text-5xl text-purple-400 animate-spin mb-4"
                         />
                         <p className="text-gray-400">Gerando QR Code PIX...</p>
                       </div>
@@ -523,19 +531,21 @@ export default function PaymentPage() {
               </div>
 
               {/* Security Badge */}
-              <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-xl p-4">
-                <div className="flex items-center gap-3">
-                  <FontAwesomeIcon
-                    icon={faShieldAlt}
-                    className="text-2xl text-cyan-400"
-                  />
-                  <div>
-                    <p className="text-white font-semibold">
+              <div className="bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 border border-purple-500/30 rounded-xl sm:rounded-2xl p-5 backdrop-blur-sm">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-purple-500/30 shrink-0">
+                    <FontAwesomeIcon
+                      icon={faShieldAlt}
+                      className="text-xl text-purple-400"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-white font-bold mb-1.5">
                       Pagamento 100% Seguro
                     </p>
-                    <p className="text-gray-400 text-sm">
-                      Seus dados estão protegidos, não guardamos nenhum dado
-                      sensível.
+                    <p className="text-gray-400 text-sm leading-relaxed">
+                      Seus dados estão protegidos com criptografia de ponta a
+                      ponta. Não armazenamos informações sensíveis de pagamento.
                     </p>
                   </div>
                 </div>
@@ -544,7 +554,7 @@ export default function PaymentPage() {
 
             {/* Sidebar - Order Summary (Desktop) */}
             <div className="hidden lg:block lg:col-span-1">
-              <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-cyan-500/20 rounded-2xl p-6 md:p-8 backdrop-blur-sm sticky top-32">
+              <div className="bg-gradient-to-br from-gray-900/90 via-gray-900/80 to-black/90 border border-purple-500/30 rounded-2xl sm:rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-purple-500/5 sticky top-32">
                 <OrderSummary
                   plan={plan}
                   couponCode={coupon_code}
