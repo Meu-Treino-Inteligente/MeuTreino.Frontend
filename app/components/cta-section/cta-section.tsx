@@ -119,10 +119,10 @@ export function CtaSection() {
             </Link>
 
             <Link
-              href="/plans"
+              href="/how-it-works"
               className="group w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-6 border-2 border-purple-500/50 rounded-2xl text-purple-400 font-bold text-base sm:text-lg md:text-xl hover:bg-purple-500/10 hover:border-purple-400 transition-all backdrop-blur-sm text-center"
             >
-              Ver Planos e Preços
+              Como Funciona
             </Link>
           </div>
 

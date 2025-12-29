@@ -39,9 +39,9 @@ const PlanDescription = ({ description }: { description: string }) => {
         <li key={index} className="flex items-start gap-3">
           <FontAwesomeIcon
             icon={faCheckCircle}
-            className="text-purple-400 mt-0.5 text-sm shrink-0"
+            className="text-purple-600 mt-0.5 text-sm shrink-0"
           />
-          <span className="text-gray-300 text-sm leading-relaxed">{item}</span>
+          <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
         </li>
       ))}
     </ul>
@@ -164,12 +164,12 @@ export default function SelectPlanPage() {
 
   if (is_loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a]">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
         <HeaderNavigation />
         <div className="flex items-center justify-center min-h-screen">
           <FontAwesomeIcon
             icon={faSpinner}
-            className="text-5xl text-purple-400 animate-spin"
+            className="text-5xl text-purple-600 animate-spin"
           />
         </div>
         <FooterSection />
@@ -182,13 +182,13 @@ export default function SelectPlanPage() {
     activePlans.find((p) => p.id === selected_plan_id) || activePlans[0];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a] text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-900">
       <HeaderNavigation />
       <div className="py-8 sm:py-12 md:py-16 px-4 pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16 md:pb-20">
         <div className="container mx-auto max-w-7xl">
           {/* Hero Header */}
           <div className="text-center mb-6 md:mb-8">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black mb-2 leading-tight text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black mb-2 leading-tight text-gray-900">
               Escolha Seu Plano
             </h1>
           </div>
@@ -196,6 +196,12 @@ export default function SelectPlanPage() {
           {/* Plans - Carousel Mobile / Grid Desktop */}
           {/* Mobile Carousel */}
           <div className="md:hidden mb-6 -mx-4 px-4 py-4">
+            {/* Indicador de arrastar */}
+            {plans.length > 1 && (
+              <div className="text-center mb-4">
+                <p className="text-gray-600 text-sm">Arraste para ver mais planos</p>
+              </div>
+            )}
             <Swiper
               onSwiper={(swiper) => {
                 swiper_ref.current = swiper;
@@ -228,12 +234,12 @@ export default function SelectPlanPage() {
                         handle_select_plan(plan.id, plan.isActive, index)
                       }
                       disabled={is_disabled}
-                      className={`relative bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border-2 rounded-3xl p-6 text-left transition-all w-full min-h-[420px] flex flex-col shadow-2xl ${
+                      className={`relative bg-white border-2 rounded-3xl p-6 text-left transition-all w-full min-h-[420px] flex flex-col shadow-xl ${
                         is_disabled
-                          ? "border-gray-800/50 opacity-50 cursor-not-allowed"
+                          ? "border-gray-200 opacity-50 cursor-not-allowed"
                           : is_selected
                           ? "border-purple-500 shadow-2xl shadow-purple-500/30 scale-[1.02] ring-2 ring-purple-500/20"
-                          : "border-gray-700/50 hover:border-purple-500/50 hover:scale-[1.01]"
+                          : "border-gray-200 hover:border-purple-300 hover:scale-[1.01]"
                       }`}
                     >
                       {/* Recommended Badge */}
@@ -246,7 +252,7 @@ export default function SelectPlanPage() {
 
                       {/* Tag "Em breve" para planos desabilitados */}
                       {is_disabled && (
-                        <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/50 rounded-full text-yellow-400 text-xs font-bold">
+                        <div className="absolute top-4 right-4 px-3 py-1 bg-yellow-50 border border-yellow-200 rounded-full text-yellow-700 text-xs font-bold">
                           Em breve
                         </div>
                       )}
@@ -262,14 +268,14 @@ export default function SelectPlanPage() {
                       )}
 
                       <div className="mb-6 flex-1 flex flex-col">
-                        <h3 className="text-2xl md:text-3xl font-black text-white mb-3">
+                        <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-3">
                           {plan.name}
                         </h3>
                         <div className="mb-4">
-                          <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent mb-1">
+                          <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent mb-1">
                             {format_price(plan.price)}
                           </div>
-                          <p className="text-gray-400 text-xs">por mês</p>
+                          <p className="text-gray-600 text-xs">por mês</p>
                         </div>
                         <div className="flex-1">
                           <PlanDescription description={plan.description} />
@@ -294,12 +300,12 @@ export default function SelectPlanPage() {
                   key={plan.id}
                   onClick={() => handle_select_plan(plan.id, plan.isActive)}
                   disabled={is_disabled}
-                  className={`relative bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border-2 rounded-3xl p-6 md:p-8 text-left transition-all min-h-[500px] flex flex-col shadow-2xl ${
+                  className={`relative bg-white border-2 rounded-3xl p-6 md:p-8 text-left transition-all min-h-[500px] flex flex-col shadow-xl ${
                     is_disabled
-                      ? "border-gray-800/50 opacity-50 cursor-not-allowed"
+                      ? "border-gray-200 opacity-50 cursor-not-allowed"
                       : is_selected
                       ? "border-purple-500 shadow-2xl shadow-purple-500/30 scale-[1.03] ring-2 ring-purple-500/20"
-                      : "border-gray-700/50 hover:border-purple-500/50 hover:scale-[1.02] cursor-pointer"
+                      : "border-gray-200 hover:border-purple-300 hover:scale-[1.02] cursor-pointer"
                   }`}
                 >
                   {/* Recommended Badge */}
@@ -312,7 +318,7 @@ export default function SelectPlanPage() {
 
                   {/* Tag "Em breve" para planos desabilitados */}
                   {is_disabled && (
-                    <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/50 rounded-full text-yellow-400 text-xs font-bold">
+                    <div className="absolute top-4 right-4 px-3 py-1 bg-yellow-50 border border-yellow-200 rounded-full text-yellow-700 text-xs font-bold">
                       Em breve
                     </div>
                   )}
@@ -328,14 +334,14 @@ export default function SelectPlanPage() {
                   )}
 
                   <div className="mb-6 flex-1 flex flex-col">
-                    <h3 className="text-2xl md:text-3xl font-black text-white mb-3">
+                    <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-3">
                       {plan.name}
                     </h3>
                     <div className="mb-4">
-                      <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent mb-1">
+                      <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent mb-1">
                         {format_price(plan.price)}
                       </div>
-                      <p className="text-gray-400 text-sm">por mês</p>
+                      <p className="text-gray-600 text-sm">por mês</p>
                     </div>
                     <div className="flex-1">
                       <PlanDescription description={plan.description} />
@@ -351,7 +357,7 @@ export default function SelectPlanPage() {
             <button
               onClick={handle_continue}
               disabled={!selected_plan_id}
-              className="group relative px-10 py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 rounded-full text-white font-bold text-lg
+              className="group relative px-10 py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 rounded-lg text-white font-semibold text-lg
               hover:shadow-2xl hover:shadow-purple-500/50 transition-all transform hover:scale-105 disabled:opacity-50 
               disabled:cursor-not-allowed disabled:transform-none disabled:hover:shadow-none flex items-center gap-3 mx-auto overflow-hidden cursor-pointer"
             >

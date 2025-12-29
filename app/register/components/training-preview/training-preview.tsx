@@ -130,23 +130,25 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
         </div>
 
         {/* Screen Content */}
-        <div className="w-full h-full bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a] rounded-[2.75rem] overflow-hidden relative">
+        <div className="w-full h-full bg-gradient-to-br from-gray-50 via-white to-gray-100 rounded-[2.75rem] overflow-hidden relative">
           {/* Scrollable Content - Hidden Scrollbar */}
           <div className="h-full overflow-y-auto pb-6 scrollbar-hide">
             {/* Header Section */}
-            <div className="pt-12 pb-4 px-4 text-center border-b border-purple-500/20">
-              <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 mb-3">
-                <span className="inline-block h-1 w-1 rounded-full bg-purple-400 animate-pulse" />
+            <div className="pt-12 pb-4 px-4 text-center border-b border-gray-200">
+              <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-purple-200 bg-purple-50 text-purple-700 mb-3">
+                <span className="inline-block h-1 w-1 rounded-full bg-purple-500 animate-pulse" />
                 <span className="text-[10px]">Plano Personalizado por IA</span>
               </div>
               <h1 className="text-lg font-black mb-2 leading-tight">
-                <span className="block text-white text-sm">Seu Plano de</span>
-                <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-base">
+                <span className="block text-gray-900 text-sm">
+                  Seu Plano de
+                </span>
+                <span className="block bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent text-base">
                   Treino Inteligente
                 </span>
               </h1>
               {hasBasicInfo && (
-                <p className="text-gray-400 text-xs mt-2">
+                <p className="text-gray-600 text-xs mt-2">
                   Criado exclusivamente para {form_data.name.split(" ")[0]}
                 </p>
               )}
@@ -156,7 +158,7 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
                 <div className="mt-3 flex justify-center">
                   <button
                     disabled
-                    className="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 rounded-full text-white font-bold text-[10px] opacity-80 cursor-pointer"
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 rounded-lg text-white font-semibold text-[10px] opacity-80 cursor-pointer"
                   >
                     <FontAwesomeIcon
                       icon={faDownload}
@@ -170,12 +172,12 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
 
             {/* User Info Card */}
             {hasBasicInfo && (
-              <div className="mx-4 mt-4 bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-xl p-3">
+              <div className="mx-4 mt-4 bg-white border-2 border-gray-200 rounded-xl p-3 shadow-xl">
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   {form_data.name && (
                     <div>
                       <span className="text-gray-500 text-[10px]">Nome:</span>
-                      <span className="text-purple-300 font-semibold ml-1 block">
+                      <span className="text-purple-700 font-semibold ml-1 block">
                         {form_data.name.split(" ")[0]}
                       </span>
                     </div>
@@ -183,7 +185,7 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
                   {form_data.age && (
                     <div>
                       <span className="text-gray-500 text-[10px]">Idade:</span>
-                      <span className="text-purple-300 font-semibold ml-1 block">
+                      <span className="text-purple-700 font-semibold ml-1 block">
                         {form_data.age} anos
                       </span>
                     </div>
@@ -191,7 +193,7 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
                   {form_data.gender && (
                     <div>
                       <span className="text-gray-500 text-[10px]">Gênero:</span>
-                      <span className="text-purple-300 font-semibold ml-1 block">
+                      <span className="text-purple-700 font-semibold ml-1 block">
                         {form_data.gender}
                       </span>
                     </div>
@@ -203,7 +205,7 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
                       </span>
                       <div className="flex items-center gap-1.5 mt-0.5">
                         <span
-                          className={`text-purple-300 font-semibold block transition-all ${
+                          className={`text-purple-700 font-semibold block transition-all ${
                             isSensitiveGoal && !showSensitiveGoal
                               ? "blur-sm select-none"
                               : ""
@@ -216,7 +218,7 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
                             onClick={() =>
                               setShowSensitiveGoal(!showSensitiveGoal)
                             }
-                            className="text-purple-400 hover:text-purple-300 transition-colors p-0.5"
+                            className="text-purple-600 hover:text-purple-700 transition-colors p-0.5"
                             aria-label={
                               showSensitiveGoal
                                 ? "Ocultar objetivo"
@@ -238,17 +240,17 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
 
             {/* Physical Data */}
             {hasPhysicalData && (
-              <div className="mx-4 mt-3 bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-xl p-3">
+              <div className="mx-4 mt-3 bg-white border-2 border-gray-200 rounded-xl p-3 shadow-xl">
                 <div className="flex items-center gap-2 mb-2">
                   <FontAwesomeIcon
                     icon={faDumbbell}
-                    className="text-purple-400 text-xs"
+                    className="text-purple-600 text-xs"
                   />
-                  <span className="text-purple-300 font-semibold text-xs">
+                  <span className="text-purple-700 font-semibold text-xs">
                     Dados Físicos
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-xs text-gray-300">
+                <div className="grid grid-cols-2 gap-2 text-xs text-gray-700">
                   {form_data.weight && (
                     <div>
                       <span className="text-gray-500 text-[10px]">Peso:</span>
@@ -272,10 +274,10 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
             {/* Weekly Plan Section */}
             {hasGoal && (
               <div className="mt-4 px-4">
-                <h2 className="text-sm font-bold mb-3 flex items-center gap-2 text-white">
+                <h2 className="text-sm font-bold mb-3 flex items-center gap-2 text-gray-900">
                   <FontAwesomeIcon
                     icon={faCalendarWeek}
-                    className="text-purple-400 text-xs"
+                    className="text-purple-600 text-xs"
                   />
                   Planejamento Semanal
                 </h2>
@@ -283,34 +285,34 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
                   {previewDays.map(({ day }) => (
                     <div
                       key={day}
-                      className="bg-gradient-to-br from-gray-900/50 to-black/50 border-l-4 border-purple-500/50 rounded-r-xl p-3 hover:border-purple-400/70 transition-all"
+                      className="bg-white border-l-4 border-purple-500 rounded-r-xl p-3 hover:border-purple-600 transition-all shadow-xl"
                     >
                       <div className="flex items-center gap-3 mb-2">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
                           {dayNamesShort[day].charAt(0)}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-purple-300 font-bold text-xs truncate">
+                          <h3 className="text-purple-700 font-bold text-xs truncate">
                             {dayNamesShort[day]}
                           </h3>
                         </div>
                         {!form_data.exercicesPerDay ? (
-                          <div className="flex items-center gap-1 px-2 py-1 bg-purple-500/10 rounded border border-purple-500/20">
+                          <div className="flex items-center gap-1 px-2 py-1 bg-purple-50 rounded border border-purple-200">
                             <FontAwesomeIcon
                               icon={faClock}
-                              className="text-purple-400 text-[10px]"
+                              className="text-purple-600 text-[10px]"
                             />
-                            <span className="text-white font-semibold text-[10px]">
+                            <span className="text-gray-900 font-semibold text-[10px]">
                               ?
                             </span>
                           </div>
                         ) : (
-                          <div className="flex items-center gap-1 px-2 py-1 bg-purple-500/10 rounded border border-purple-500/20">
+                          <div className="flex items-center gap-1 px-2 py-1 bg-purple-50 rounded border border-purple-200">
                             <FontAwesomeIcon
                               icon={faClock}
-                              className="text-purple-400 text-[10px]"
+                              className="text-purple-600 text-[10px]"
                             />
-                            <span className="text-white font-semibold text-[10px]">
+                            <span className="text-gray-900 font-semibold text-[10px]">
                               ~{form_data.exercicesPerDay * 15} min
                             </span>
                           </div>
@@ -318,10 +320,10 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
                       </div>
                       {form_data.exercicesPerDay && (
                         <div className="ml-11">
-                          <div className="flex items-center gap-2 text-gray-400">
+                          <div className="flex items-center gap-2 text-gray-600">
                             <FontAwesomeIcon
                               icon={faDumbbell}
-                              className="text-purple-400 text-[10px]"
+                              className="text-purple-600 text-[10px]"
                             />
                             <span className="text-[10px]">
                               {form_data.exercicesPerDay}{" "}
@@ -335,10 +337,10 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
                     </div>
                   ))}
                   {restDays > 0 && (
-                    <div className="bg-gray-800/30 rounded-xl p-4 border border-gray-700/50 text-center">
+                    <div className="bg-white rounded-xl p-4 border-2 border-gray-200 text-center shadow-xl">
                       <FontAwesomeIcon
                         icon={faCheckCircle}
-                        className="text-gray-500 text-2xl mb-2 opacity-50"
+                        className="text-gray-400 text-2xl mb-2 opacity-50"
                       />
                       <p className="text-gray-500 text-xs">
                         {restDays}{" "}
@@ -355,21 +357,21 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
             {/* Diretrizes Gerais Preview */}
             {hasGoal && (
               <div className="mt-4 px-4">
-                <h2 className="text-sm font-bold mb-3 flex items-center gap-2 text-white">
+                <h2 className="text-sm font-bold mb-3 flex items-center gap-2 text-gray-900">
                   <FontAwesomeIcon
                     icon={faLightbulb}
-                    className="text-purple-400 text-xs"
+                    className="text-purple-600 text-xs"
                   />
                   Diretrizes Gerais
                 </h2>
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-xl p-3">
+                <div className="bg-white border-2 border-gray-200 rounded-xl p-3 shadow-xl">
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <FontAwesomeIcon
                         icon={faCheckCircle}
-                        className="text-purple-400 text-[10px] mt-0.5 shrink-0"
+                        className="text-purple-600 text-[10px] mt-0.5 shrink-0"
                       />
-                      <span className="text-gray-300 text-[10px] leading-relaxed">
+                      <span className="text-gray-700 text-[10px] leading-relaxed">
                         Diretrizes personalizadas serão geradas conforme seu
                         perfil e objetivos
                       </span>
@@ -382,21 +384,21 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
             {/* Dicas de Nutrição Preview */}
             {hasGoal && (
               <div className="mt-4 px-4">
-                <h2 className="text-sm font-bold mb-3 flex items-center gap-2 text-white">
+                <h2 className="text-sm font-bold mb-3 flex items-center gap-2 text-gray-900">
                   <FontAwesomeIcon
                     icon={faUtensils}
-                    className="text-purple-400 text-xs"
+                    className="text-purple-600 text-xs"
                   />
                   Dicas de Nutrição
                 </h2>
-                <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-xl p-3">
+                <div className="bg-white border-2 border-gray-200 rounded-xl p-3 shadow-xl">
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <FontAwesomeIcon
                         icon={faCheckCircle}
-                        className="text-purple-400 text-[10px] mt-0.5 shrink-0"
+                        className="text-purple-600 text-[10px] mt-0.5 shrink-0"
                       />
-                      <span className="text-gray-300 text-[10px] leading-relaxed">
+                      <span className="text-gray-700 text-[10px] leading-relaxed">
                         Recomendações nutricionais curtas personalizadas para
                         seu objetivo
                       </span>
@@ -409,43 +411,43 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
             {/* Plano de Progressão Preview */}
             {hasGoal && (
               <div className="mt-4 px-4">
-                <h2 className="text-sm font-bold mb-3 flex items-center gap-2 text-white">
+                <h2 className="text-sm font-bold mb-3 flex items-center gap-2 text-gray-900">
                   <FontAwesomeIcon
                     icon={faChartLine}
-                    className="text-purple-400 text-xs"
+                    className="text-purple-600 text-xs"
                   />
                   Plano de Progressão
                 </h2>
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-lg p-2">
-                    <h3 className="text-purple-400 font-bold text-[10px] mb-1">
+                  <div className="bg-white border-2 border-gray-200 rounded-lg p-2 shadow-xl">
+                    <h3 className="text-purple-700 font-bold text-[10px] mb-1">
                       Semanas 1-2
                     </h3>
-                    <p className="text-gray-300 text-[9px] leading-tight">
+                    <p className="text-gray-700 text-[9px] leading-tight">
                       Adaptação inicial
                     </p>
                   </div>
-                  <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-lg p-2">
-                    <h3 className="text-purple-400 font-bold text-[10px] mb-1">
+                  <div className="bg-white border-2 border-gray-200 rounded-lg p-2 shadow-xl">
+                    <h3 className="text-purple-700 font-bold text-[10px] mb-1">
                       Semanas 3-4
                     </h3>
-                    <p className="text-gray-300 text-[9px] leading-tight">
+                    <p className="text-gray-700 text-[9px] leading-tight">
                       Aumento gradual
                     </p>
                   </div>
-                  <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-lg p-2">
-                    <h3 className="text-purple-400 font-bold text-[10px] mb-1">
+                  <div className="bg-white border-2 border-gray-200 rounded-lg p-2 shadow-xl">
+                    <h3 className="text-purple-700 font-bold text-[10px] mb-1">
                       Semanas 5-6
                     </h3>
-                    <p className="text-gray-300 text-[9px] leading-tight">
+                    <p className="text-gray-700 text-[9px] leading-tight">
                       Intensificação
                     </p>
                   </div>
-                  <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-lg p-2">
-                    <h3 className="text-purple-400 font-bold text-[10px] mb-1">
+                  <div className="bg-white border-2 border-gray-200 rounded-lg p-2 shadow-xl">
+                    <h3 className="text-purple-700 font-bold text-[10px] mb-1">
                       Semanas 7-8
                     </h3>
-                    <p className="text-gray-300 text-[9px] leading-tight">
+                    <p className="text-gray-700 text-[9px] leading-tight">
                       Otimização
                     </p>
                   </div>
@@ -473,7 +475,7 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
 
             {/* Mini Footer */}
             {hasBasicInfo && (
-              <div className="mt-6 mx-4 pt-4 border-t border-purple-500/20">
+              <div className="mt-6 mx-4 pt-4 border-t border-gray-200">
                 <div className="text-center">
                   <p className="text-gray-500 text-[10px]">
                     Seu treino será gerado após o cadastro

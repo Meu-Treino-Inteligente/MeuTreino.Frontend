@@ -26,7 +26,7 @@ export function OrderSummaryDrawer({
   return (
     <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 pointer-events-auto">
       <div
-        className={`bg-gradient-to-br from-gray-900/80 to-black/80 border-t border-purple-500/20 rounded-t-3xl flex flex-col overflow-hidden shadow-2xl backdrop-blur-sm ${
+        className={`bg-white border-t-2 border-gray-200 rounded-t-3xl flex flex-col overflow-hidden shadow-2xl ${
           isExpanded ? "animate-slideUpExpand" : "animate-slideDownCollapse"
         }`}
         style={{
@@ -38,18 +38,18 @@ export function OrderSummaryDrawer({
         {/* Header do Drawer - Sempre Visível */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="flex items-center justify-between p-4 border-b border-gray-700 w-full hover:bg-gray-800/50 transition-colors"
+          className="flex items-center justify-between p-4 border-b border-gray-200 w-full hover:bg-gray-50 transition-colors"
           aria-label={isExpanded ? "Recolher resumo" : "Expandir resumo"}
         >
           <div className="flex items-center gap-3">
-            <h2 className="text-xl font-bold text-white">Resumo do Pedido</h2>
-            <span className="text-sm text-gray-400">
+            <h2 className="text-xl font-bold text-gray-900">Resumo do Pedido</h2>
+            <span className="text-sm text-purple-700 font-semibold">
               {formatPrice(finalPrice)}
             </span>
           </div>
           <FontAwesomeIcon
             icon={isExpanded ? faChevronDown : faChevronUp}
-            className="text-purple-400 text-xl"
+            className="text-purple-600 text-xl"
           />
         </button>
 

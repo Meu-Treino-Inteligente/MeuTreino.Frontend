@@ -210,10 +210,10 @@ export function FeaturesSection() {
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
               <Link
-                href="/plans"
+                href="/how-it-works"
                 className="w-full sm:w-auto px-8 py-4 border-2 border-purple-500/50 rounded-full text-purple-400 font-bold text-base sm:text-lg hover:bg-purple-500/10 hover:border-purple-400 transition-all text-center"
               >
-                Ver Todos os Planos
+                Como Funciona
               </Link>
             </div>
           </div>

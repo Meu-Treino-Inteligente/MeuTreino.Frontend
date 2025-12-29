@@ -84,12 +84,12 @@ export default function UserTrainingPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-900">
         <HeaderNavigation />
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-400 mx-auto mb-4"></div>
-            <p className="text-gray-400">Carregando seu treino...</p>
+            <p className="text-gray-600">Carregando seu treino...</p>
           </div>
         </div>
         <FooterSection />
@@ -99,15 +99,15 @@ export default function UserTrainingPage() {
 
   if (error || !userSiteData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-900">
         <HeaderNavigation />
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
-            <p className="text-red-400 text-lg mb-4">Treino não encontrado.</p>
-            <p className="text-gray-400">Verifique se o link está correto.</p>
+            <p className="text-red-600 text-lg mb-4">Treino não encontrado.</p>
+            <p className="text-gray-600">Verifique se o link está correto.</p>
             <button
               onClick={() => window.location.reload()}
-              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all mt-4"
+              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg text-white font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all mt-4"
             >
               <FontAwesomeIcon icon={faRefresh} className="mr-2" />
               Tentar novamente
@@ -145,22 +145,22 @@ export default function UserTrainingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a] text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-900">
       <HeaderNavigation />
       <div className="container mx-auto px-4 pt-24 pb-12 md:pt-32 md:py-20">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-xs md:text-sm mb-6">
-            <span className="inline-block h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-purple-200 bg-purple-50 text-purple-700 text-xs md:text-sm mb-6">
+            <span className="inline-block h-2 w-2 rounded-full bg-purple-500 animate-pulse" />
             Plano Personalizado por IA
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 leading-tight">
-            <span className="block text-white">Seu Plano de</span>
-            <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent">
+            <span className="block text-gray-900">Seu Plano de</span>
+            <span className="block bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
               Treino Inteligente
             </span>
           </h1>
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg mt-4">
+          <p className="text-gray-600 text-sm sm:text-base md:text-lg mt-4">
             Criado exclusivamente para {userData?.name || "você"}
           </p>
 
@@ -168,7 +168,7 @@ export default function UserTrainingPage() {
             <PDFDownloadLink
               document={<TrainingPDFDocument trainingPlan={trainingPlan} />}
               fileName={`treino-${slug}.pdf`}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 rounded-full text-white font-bold hover:shadow-xl hover:shadow-purple-500/50 transition-all transform hover:scale-105"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 rounded-lg text-white font-semibold hover:shadow-xl hover:shadow-purple-500/50 transition-all transform hover:scale-105"
             >
               {({ loading }: { loading: boolean }) => (
                 <>
@@ -184,12 +184,12 @@ export default function UserTrainingPage() {
         {userData && (
           <div className="max-w-4xl mx-auto mb-12 md:mb-16 space-y-4">
             {/* User Info Card */}
-            <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-2xl p-6">
+            <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-xl">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 {userData.name && (
                   <div>
                     <span className="text-gray-500 text-xs">Nome:</span>
-                    <span className="text-purple-300 font-semibold ml-2 block">
+                    <span className="text-purple-700 font-semibold ml-2 block">
                       {userData.name.split(" ")[0]}
                     </span>
                   </div>
@@ -197,7 +197,7 @@ export default function UserTrainingPage() {
                 {userData.age && (
                   <div>
                     <span className="text-gray-500 text-xs">Idade:</span>
-                    <span className="text-purple-300 font-semibold ml-2 block">
+                    <span className="text-purple-700 font-semibold ml-2 block">
                       {userData.age} anos
                     </span>
                   </div>
@@ -205,7 +205,7 @@ export default function UserTrainingPage() {
                 {userData.gender && (
                   <div>
                     <span className="text-gray-500 text-xs">Gênero:</span>
-                    <span className="text-purple-300 font-semibold ml-2 block">
+                    <span className="text-purple-700 font-semibold ml-2 block">
                       {userData.gender}
                     </span>
                   </div>
@@ -215,7 +215,7 @@ export default function UserTrainingPage() {
                     <span className="text-gray-500 text-xs">Objetivo:</span>
                     <div className="flex items-center gap-2 mt-0.5">
                       <span
-                        className={`text-purple-300 font-semibold block transition-all ${
+                        className={`text-purple-700 font-semibold block transition-all ${
                           isSensitiveGoal && !showSensitiveGoal
                             ? "blur-sm select-none"
                             : ""
@@ -228,7 +228,7 @@ export default function UserTrainingPage() {
                           onClick={() =>
                             setShowSensitiveGoal(!showSensitiveGoal)
                           }
-                          className="text-purple-400 hover:text-purple-300 transition-colors p-1"
+                          className="text-purple-600 hover:text-purple-700 transition-colors p-1"
                           aria-label={
                             showSensitiveGoal
                               ? "Ocultar objetivo"
@@ -248,17 +248,17 @@ export default function UserTrainingPage() {
             </div>
 
             {/* Physical Data Card */}
-            <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-2xl p-6">
+            <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-xl">
               <div className="flex items-center gap-2 mb-4">
                 <FontAwesomeIcon
                   icon={faDumbbell}
-                  className="text-purple-400 text-lg"
+                  className="text-purple-600 text-lg"
                 />
-                <span className="text-purple-300 font-semibold text-base">
+                <span className="text-purple-700 font-semibold text-base">
                   Dados Físicos
                 </span>
               </div>
-              <div className="grid grid-cols-2 gap-4 text-sm text-gray-300">
+              <div className="grid grid-cols-2 gap-4 text-sm text-gray-700">
                 {userData.weight && (
                   <div>
                     <span className="text-gray-500 text-xs">Peso:</span>
@@ -282,10 +282,10 @@ export default function UserTrainingPage() {
 
         {/* Semana */}
         <div className="mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 flex items-center gap-3">
+          <h2 className="text-2xl md:text-3xl font-bold mb-8 flex items-center gap-3 text-gray-900">
             <FontAwesomeIcon
               icon={faCalendarWeek}
-              className="text-purple-400"
+              className="text-purple-600"
             />
             Planejamento Semanal
           </h2>
@@ -304,22 +304,22 @@ export default function UserTrainingPage() {
         {trainingPlan.generalGuidelines &&
           trainingPlan.generalGuidelines.length > 0 && (
             <div className="mb-16">
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3 text-gray-900">
                 <FontAwesomeIcon
                   icon={faLightbulb}
-                  className="text-purple-400"
+                  className="text-purple-600"
                 />
                 Diretrizes Gerais
               </h2>
-              <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-2xl p-6 md:p-8">
+              <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 shadow-xl">
                 <ul className="space-y-4">
                   {trainingPlan.generalGuidelines.map((guideline, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <FontAwesomeIcon
                         icon={faCheckCircle}
-                        className="text-purple-400 mt-1 shrink-0"
+                        className="text-purple-600 mt-1 shrink-0"
                       />
-                      <span className="text-gray-300">{guideline}</span>
+                      <span className="text-gray-700">{guideline}</span>
                     </li>
                   ))}
                 </ul>
@@ -331,22 +331,22 @@ export default function UserTrainingPage() {
         {trainingPlan.nutritionTips &&
           trainingPlan.nutritionTips.length > 0 && (
             <div className="mb-16">
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3 text-gray-900">
                 <FontAwesomeIcon
                   icon={faUtensils}
-                  className="text-purple-400"
+                  className="text-purple-600"
                 />
                 Dicas de Nutrição
               </h2>
-              <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-2xl p-6 md:p-8">
+              <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 shadow-xl">
                 <ul className="space-y-4">
                   {trainingPlan.nutritionTips.map((tip, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <FontAwesomeIcon
                         icon={faCheckCircle}
-                        className="text-purple-400 mt-1 shrink-0"
+                        className="text-purple-600 mt-1 shrink-0"
                       />
-                      <span className="text-gray-300">{tip}</span>
+                      <span className="text-gray-700">{tip}</span>
                     </li>
                   ))}
                 </ul>
@@ -357,8 +357,8 @@ export default function UserTrainingPage() {
         {/* Plano de Progressão */}
         {trainingPlan.progressionPlan && (
           <div className="mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
-              <FontAwesomeIcon icon={faChartLine} className="text-purple-400" />
+            <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3 text-gray-900">
+              <FontAwesomeIcon icon={faChartLine} className="text-purple-600" />
               Plano de Progressão
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -397,14 +397,14 @@ function DayCard({
   const isRestDay = dayPlan.exercises.length === 0;
 
   return (
-    <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border-l-4 border-purple-500/50 rounded-r-2xl p-6 md:p-8 hover:border-purple-400/70 transition-all shadow-lg">
+    <div className="bg-white border-l-4 border-purple-500 rounded-r-2xl p-6 md:p-8 hover:border-purple-600 transition-all shadow-xl">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg">
             {dayNames[day].charAt(0)}
           </div>
           <div>
-            <h3 className="text-2xl md:text-3xl font-bold text-purple-300">
+            <h3 className="text-2xl md:text-3xl font-bold text-purple-700">
               {dayNames[day]}
             </h3>
             {dayPlan.muscleGroups && dayPlan.muscleGroups.length > 0 && (
@@ -412,7 +412,7 @@ function DayCard({
                 {dayPlan.muscleGroups.map((group, index) => (
                   <span
                     key={index}
-                    className="px-2 py-1 bg-purple-500/10 text-purple-400 rounded-md text-xs font-semibold"
+                    className="px-2 py-1 bg-purple-50 text-purple-700 rounded-md text-xs font-semibold border border-purple-200"
                   >
                     {group}
                   </span>
@@ -422,9 +422,9 @@ function DayCard({
           </div>
         </div>
         {!isRestDay && (
-          <div className="flex items-center gap-2 px-4 py-2 bg-purple-500/10 rounded-lg border border-purple-500/20">
-            <FontAwesomeIcon icon={faClock} className="text-purple-400" />
-            <span className="text-white font-semibold">
+          <div className="flex items-center gap-2 px-4 py-2 bg-purple-50 rounded-lg border border-purple-200">
+            <FontAwesomeIcon icon={faClock} className="text-purple-600" />
+            <span className="text-gray-900 font-semibold">
               {dayPlan.totalDurationMinutes} min
             </span>
           </div>
@@ -459,32 +459,32 @@ function ExerciseCard({
   exercise: import("@/types/training-plans/training-plan.types").Exercise;
 }) {
   return (
-    <div className="bg-gray-900/30 rounded-lg p-4 border border-gray-800">
+    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
       <div className="flex items-start gap-4">
-        <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center shrink-0">
+        <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center shrink-0">
           <FontAwesomeIcon
             icon={faDumbbell}
-            className="text-purple-400 text-sm"
+            className="text-purple-600 text-sm"
           />
         </div>
         <div className="flex-1">
-          <h4 className="font-bold text-white text-lg mb-2">{exercise.name}</h4>
-          <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-gray-400 mb-2">
+          <h4 className="font-bold text-gray-900 text-lg mb-2">{exercise.name}</h4>
+          <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-gray-600 mb-2">
             <span>
-              <span className="text-purple-400 font-semibold">
+              <span className="text-purple-600 font-semibold">
                 {exercise.sets}
               </span>{" "}
               séries
             </span>
             <span>
-              <span className="text-purple-400 font-semibold">
+              <span className="text-purple-600 font-semibold">
                 {exercise.reps}
               </span>{" "}
               repetições
             </span>
             <span>
               Descanso:{" "}
-              <span className="text-purple-400 font-semibold">
+              <span className="text-purple-600 font-semibold">
                 {exercise.restSeconds}s
               </span>
             </span>
@@ -508,9 +508,9 @@ function ProgressionCard({
   description: string;
 }) {
   return (
-    <div className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 rounded-2xl p-6">
-      <h3 className="text-xl font-bold text-purple-400 mb-3">{title}</h3>
-      <p className="text-gray-300">{description}</p>
+    <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-xl">
+      <h3 className="text-xl font-bold text-purple-700 mb-3">{title}</h3>
+      <p className="text-gray-700">{description}</p>
     </div>
   );
 }

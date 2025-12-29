@@ -156,16 +156,16 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a]">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-900">
       <HeaderNavigation />
       <div className="container mx-auto px-4 pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-12 md:pb-16">
         {/* Mobile: Stacked Layout */}
         <div className="lg:hidden space-y-6">
           <div className="text-center mb-6">
-            <h1 className="text-3xl sm:text-4xl font-black mb-2 bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl font-black mb-2 text-gray-900">
               Crie Seu Perfil
             </h1>
-            <p className="text-gray-400 text-sm sm:text-base">{get_step_title()}</p>
+            <p className="text-gray-600 text-sm sm:text-base">{get_step_title()}</p>
           </div>
 
           {/* Progress Indicator Mobile */}
@@ -178,7 +178,7 @@ export default function RegisterPage() {
                       className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-black transition-all duration-300 relative z-10 ${
                         current_step >= step
                           ? "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white shadow-lg shadow-purple-500/50 scale-105"
-                          : "bg-gray-800/50 text-gray-500 border-2 border-gray-700"
+                          : "bg-gray-200 text-gray-400 border-2 border-gray-300"
                       }`}
                     >
                       {current_step > step ? (
@@ -193,7 +193,7 @@ export default function RegisterPage() {
                   </div>
                   {step < 4 && (
                     <div className="relative mx-1.5 sm:mx-2">
-                      <div className="w-6 sm:w-8 h-0.5 sm:h-1 bg-gray-800/50 rounded-full overflow-hidden">
+                      <div className="w-6 sm:w-8 h-0.5 sm:h-1 bg-gray-200 rounded-full overflow-hidden">
                         <div
                           className={`h-full transition-all duration-500 ${
                             current_step > step
@@ -208,8 +208,8 @@ export default function RegisterPage() {
               ))}
             </div>
             <div className="text-center">
-              <div className="inline-block px-3 py-1.5 rounded-full border border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm">
-                <span className="text-purple-300 text-xs sm:text-sm font-semibold">
+              <div className="inline-block px-3 py-1.5 rounded-full border border-purple-200 bg-purple-50">
+                <span className="text-purple-700 text-xs sm:text-sm font-semibold">
                   Passo {current_step} de 4
                 </span>
               </div>
@@ -217,7 +217,7 @@ export default function RegisterPage() {
           </div>
 
           {/* Steps Card Mobile */}
-          <div className="bg-gradient-to-br from-gray-900/80 to-black/80 border border-purple-500/30 rounded-xl sm:rounded-2xl p-5 sm:p-6 backdrop-blur-xl shadow-2xl shadow-purple-500/10">
+          <div className="bg-white border-2 border-gray-200 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-xl">
             {current_step === 1 && (
               <StepOne
                 form_data={form_data}
@@ -261,10 +261,10 @@ export default function RegisterPage() {
           {/* Left: Steps */}
           <div className="sticky top-24">
             <div className="text-center mb-6">
-              <h1 className="text-4xl font-black mb-2 bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-black mb-2 text-gray-900">
                 Crie Seu Perfil
               </h1>
-              <p className="text-gray-400 text-base">{get_step_title()}</p>
+              <p className="text-gray-600 text-base">{get_step_title()}</p>
             </div>
 
             {/* Progress Indicator Desktop */}
@@ -277,7 +277,7 @@ export default function RegisterPage() {
                         className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-black transition-all duration-300 relative z-10 ${
                           current_step >= step
                             ? "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white shadow-lg shadow-purple-500/50 scale-105"
-                            : "bg-gray-800/50 text-gray-500 border-2 border-gray-700"
+                            : "bg-gray-200 text-gray-400 border-2 border-gray-300"
                         }`}
                       >
                         {current_step > step ? (
@@ -292,7 +292,7 @@ export default function RegisterPage() {
                     </div>
                     {step < 4 && (
                       <div className="relative mx-2">
-                        <div className="w-10 h-1 bg-gray-800/50 rounded-full overflow-hidden">
+                        <div className="w-10 h-1 bg-gray-200 rounded-full overflow-hidden">
                           <div
                             className={`h-full transition-all duration-500 ${
                               current_step > step
@@ -307,8 +307,8 @@ export default function RegisterPage() {
                 ))}
               </div>
               <div className="text-center">
-                <div className="inline-block px-3 py-1.5 rounded-full border border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm">
-                  <span className="text-purple-300 text-sm font-semibold">
+                <div className="inline-block px-3 py-1.5 rounded-full border border-purple-200 bg-purple-50">
+                  <span className="text-purple-700 text-sm font-semibold">
                     Passo {current_step} de 4
                   </span>
                 </div>
@@ -316,7 +316,7 @@ export default function RegisterPage() {
             </div>
 
             {/* Steps Card Desktop */}
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 border border-purple-500/30 rounded-2xl p-6 backdrop-blur-xl shadow-2xl shadow-purple-500/10">
+            <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-xl">
               {current_step === 1 && (
                 <StepOne
                   form_data={form_data}

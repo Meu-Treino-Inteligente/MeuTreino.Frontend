@@ -66,20 +66,29 @@ export function HeaderNavigation() {
           </li>
           <li>
             <Link
-              href="/plans"
+              href="/influencer/coupons"
+              className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-full text-white font-bold hover:shadow-lg hover:shadow-orange-500/50 transition-all transform hover:scale-105 relative overflow-hidden group"
+            >
+              <span className="relative z-10">Sou Influencer</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/how-it-works"
               className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-bold hover:shadow-lg hover:shadow-purple-500/50 transition-all transform hover:scale-105 relative overflow-hidden group"
             >
-              <span className="relative z-10">Ver Planos</span>
+              <span className="relative z-10">Como Funciona</span>
               <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
           </li>
           <li>
             <Link
               href="/register"
-              className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-full text-white font-bold hover:shadow-lg hover:shadow-orange-500/50 transition-all transform hover:scale-105 relative overflow-hidden group"
+              className="px-6 py-2.5 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 rounded-full text-white font-bold hover:shadow-lg hover:shadow-purple-500/50 transition-all transform hover:scale-105 relative overflow-hidden group"
             >
               <span className="relative z-10">Começar</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-pink-700 to-orange-700 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
           </li>
         </ul>
@@ -113,7 +122,9 @@ export function HeaderNavigation() {
       {/* Mobile Menu */}
       <div
         className={`md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl border-b border-purple-500/30 transition-all duration-300 ${
-          mobileMenuOpen ? "opacity-100 max-h-96" : "opacity-0 max-h-0 overflow-hidden"
+          mobileMenuOpen
+            ? "opacity-100 max-h-96"
+            : "opacity-0 max-h-0 overflow-hidden"
         }`}
       >
         <ul className="container mx-auto px-6 py-4 flex flex-col gap-4">
@@ -146,18 +157,27 @@ export function HeaderNavigation() {
           </li>
           <li>
             <Link
-              href="/plans"
+              href="/influencer/coupons"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-full text-white font-bold text-center"
+            >
+              Sou Influencer
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/how-it-works"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-bold text-center"
             >
-              Ver Planos
+              Como Funciona
             </Link>
           </li>
           <li>
             <Link
               href="/register"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-full text-white font-bold text-center"
+              className="block px-6 py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 rounded-full text-white font-bold text-center"
             >
               Começar Agora
             </Link>

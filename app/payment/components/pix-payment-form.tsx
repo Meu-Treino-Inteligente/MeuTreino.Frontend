@@ -65,53 +65,53 @@ export function PixPaymentForm({
   return (
     <div className="space-y-6">
       <div className="mb-2">
-        <h3 className="text-lg font-bold text-white mb-2">
+        <h3 className="text-lg font-bold text-gray-900 mb-2">
           Informações para Pagamento
         </h3>
-        <p className="text-gray-400 text-sm">
+        <p className="text-gray-600 text-sm">
           Preencha seus dados para gerar o QR Code PIX
         </p>
       </div>
 
       {/* Campo Nome */}
       <div>
-        <label className="block text-white text-sm font-semibold mb-2.5">
-          Nome Completo <span className="text-red-400">*</span>
+        <label className="block text-gray-900 text-sm font-semibold mb-2.5">
+          Nome Completo <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
           value={name}
           onChange={(e) => onNameChange(e.target.value)}
           placeholder="Seu nome completo"
-          className={`w-full px-4 py-3.5 bg-gray-800/60 border-2 rounded-xl text-white placeholder-gray-500 focus:outline-none transition-all duration-200 ${
+          className={`w-full px-4 py-3.5 bg-gray-50 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none transition-all duration-200 text-sm ${
             nameError
-              ? "border-red-500/60 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-500/5"
-              : "border-purple-500/20 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 hover:border-purple-500/30"
+              ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-50"
+              : "border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 hover:border-purple-300"
           }`}
         />
         {nameError && (
-          <p className="text-red-400 text-xs mt-1.5 font-medium">{nameError}</p>
+          <p className="text-red-600 text-xs mt-1.5 font-medium">{nameError}</p>
         )}
       </div>
 
       {/* Campo Email */}
       <div>
-        <label className="block text-white text-sm font-semibold mb-2.5">
-          Email (para receber o treino) <span className="text-red-400">*</span>
+        <label className="block text-gray-900 text-sm font-semibold mb-2.5">
+          Email (para receber o treino) <span className="text-red-500">*</span>
         </label>
         <input
           type="email"
           value={email}
           onChange={(e) => onEmailChange(e.target.value)}
           placeholder="seu@email.com"
-          className={`w-full px-4 py-3.5 bg-gray-800/60 border-2 rounded-xl text-white placeholder-gray-500 focus:outline-none transition-all duration-200 ${
+          className={`w-full px-4 py-3.5 bg-gray-50 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none transition-all duration-200 text-sm ${
             emailError
-              ? "border-red-500/60 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-500/5"
-              : "border-purple-500/20 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 hover:border-purple-500/30"
+              ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-50"
+              : "border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 hover:border-purple-300"
           }`}
         />
         {emailError && (
-          <p className="text-red-400 text-xs mt-1.5 font-medium">
+          <p className="text-red-600 text-xs mt-1.5 font-medium">
             {emailError}
           </p>
         )}
@@ -119,8 +119,8 @@ export function PixPaymentForm({
 
       {/* Campo Telefone */}
       <div>
-        <label className="block text-white text-sm font-semibold mb-2.5">
-          Telefone/Celular <span className="text-red-400">*</span>
+        <label className="block text-gray-900 text-sm font-semibold mb-2.5">
+          Telefone/Celular <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
@@ -128,14 +128,14 @@ export function PixPaymentForm({
           onChange={(e) => handlePhoneChange(e.target.value)}
           placeholder="(00) 00000-0000"
           maxLength={15}
-          className={`w-full px-4 py-3.5 bg-gray-800/60 border-2 rounded-xl text-white placeholder-gray-500 focus:outline-none transition-all duration-200 ${
+          className={`w-full px-4 py-3.5 bg-gray-50 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none transition-all duration-200 text-sm ${
             cellphoneError
-              ? "border-red-500/60 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-500/5"
-              : "border-purple-500/20 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 hover:border-purple-500/30"
+              ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-50"
+              : "border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 hover:border-purple-300"
           }`}
         />
         {cellphoneError && (
-          <p className="text-red-400 text-xs mt-1.5 font-medium">
+          <p className="text-red-600 text-xs mt-1.5 font-medium">
             {cellphoneError}
           </p>
         )}
@@ -143,8 +143,8 @@ export function PixPaymentForm({
 
       {/* Campo CPF */}
       <div>
-        <label className="block text-white text-sm font-semibold mb-2.5">
-          CPF <span className="text-red-400">*</span>
+        <label className="block text-gray-900 text-sm font-semibold mb-2.5">
+          CPF <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
@@ -152,20 +152,20 @@ export function PixPaymentForm({
           onChange={(e) => handleCpfChange(e.target.value)}
           placeholder="000.000.000-00"
           maxLength={14}
-          className={`w-full px-4 py-3.5 bg-gray-800/60 border-2 rounded-xl text-white placeholder-gray-500 focus:outline-none transition-all duration-200 ${
+          className={`w-full px-4 py-3.5 bg-gray-50 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none transition-all duration-200 text-sm ${
             cpfError
-              ? "border-red-500/60 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-500/5"
-              : "border-purple-500/20 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 hover:border-purple-500/30"
+              ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-50"
+              : "border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 hover:border-purple-300"
           }`}
         />
         {cpfError && (
-          <p className="text-red-400 text-xs mt-1.5 font-medium">{cpfError}</p>
+          <p className="text-red-600 text-xs mt-1.5 font-medium">{cpfError}</p>
         )}
       </div>
 
       {/* Campo Cupom de Desconto */}
       <div>
-        <label className="block text-white text-sm font-semibold mb-2.5">
+        <label className="block text-gray-900 text-sm font-semibold mb-2.5">
           Cupom de Desconto
         </label>
         <div className="relative">
@@ -178,30 +178,30 @@ export function PixPaymentForm({
             value={couponCode}
             onChange={(e) => onCouponCodeChange(e.target.value.toUpperCase())}
             placeholder="Digite o código do cupom"
-            className={`w-full pl-12 pr-12 py-3.5 bg-gray-800/60 border-2 rounded-xl text-white placeholder-gray-500 focus:outline-none transition-all duration-200 ${
+            className={`w-full pl-12 pr-12 py-3.5 bg-gray-50 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none transition-all duration-200 text-sm ${
               couponError
-                ? "border-red-500/60 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-500/5"
+                ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-50"
                 : couponCode.trim() && !couponError && discountAmount > 0
-                ? "border-green-500/60 focus:border-green-500 focus:ring-2 focus:ring-green-500/30 bg-green-500/5"
-                : "border-purple-500/20 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 hover:border-purple-500/30"
+                ? "border-green-500 focus:border-green-500 focus:ring-2 focus:ring-green-500/30 bg-green-50"
+                : "border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 hover:border-purple-300"
             }`}
           />
           {isValidatingCoupon && (
             <div className="absolute right-4 top-1/2 -translate-y-1/2">
               <FontAwesomeIcon
                 icon={faSpinner}
-                className="text-purple-400 animate-spin"
+                className="text-purple-600 animate-spin"
               />
             </div>
           )}
         </div>
         {couponError && (
-          <p className="text-red-400 text-xs mt-1.5 font-medium">
+          <p className="text-red-600 text-xs mt-1.5 font-medium">
             {couponError}
           </p>
         )}
         {couponCode.trim() && !couponError && discountAmount > 0 && (
-          <p className="text-green-400 text-xs mt-1.5 flex items-center gap-2 font-medium">
+          <p className="text-green-600 text-xs mt-1.5 flex items-center gap-2 font-medium">
             <FontAwesomeIcon icon={faCheckCircle} className="text-sm" />
             Cupom aplicado! Desconto de {formatPrice(discountAmount)}
           </p>

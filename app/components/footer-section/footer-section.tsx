@@ -62,11 +62,11 @@ export function FooterSection() {
               </li>
               <li>
                 <Link
-                  href="/plans"
+                  href="/how-it-works"
                   className="text-sm sm:text-base text-gray-400 hover:text-purple-400 transition-colors flex items-center gap-2 group"
                 >
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  Planos
+                  Como Funciona
                 </Link>
               </li>
             </ul>
