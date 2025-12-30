@@ -84,8 +84,8 @@ export function PixQrCodeDisplay({
             className="text-base shrink-0"
           />
           <span>
-            Escaneie o QR Code com o app do seu banco ou copie o código PIX para
-            fazer o pagamento.
+          Escaneie o QR Code com o app do seu banco ou copie o código PIX para
+          fazer o pagamento.
           </span>
         </p>
       </div>

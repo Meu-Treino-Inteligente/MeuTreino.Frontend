@@ -262,24 +262,24 @@ export default function RegisterPage() {
           <div className="sticky top-24">
             <div className="text-center mb-6">
               <h1 className="text-4xl font-black mb-2 text-gray-900">
-                Crie Seu Perfil
-              </h1>
+              Crie Seu Perfil
+            </h1>
               <p className="text-gray-600 text-base">{get_step_title()}</p>
-            </div>
+          </div>
 
             {/* Progress Indicator Desktop */}
             <div className="mb-6">
               <div className="flex items-center justify-center mb-3 px-2">
-                {[1, 2, 3, 4].map((step) => (
-                  <div key={step} className="flex items-center">
+              {[1, 2, 3, 4].map((step) => (
+                <div key={step} className="flex items-center">
                     <div className="relative">
-                      <div
+                  <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-black transition-all duration-300 relative z-10 ${
-                          current_step >= step
+                      current_step >= step
                             ? "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white shadow-lg shadow-purple-500/50 scale-105"
                             : "bg-gray-200 text-gray-400 border-2 border-gray-300"
-                        }`}
-                      >
+                    }`}
+                  >
                         {current_step > step ? (
                           <span className="text-white text-xs">✓</span>
                         ) : (
@@ -289,23 +289,23 @@ export default function RegisterPage() {
                       {current_step === step && (
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 rounded-full blur-xl opacity-50 animate-pulse" />
                       )}
-                    </div>
-                    {step < 4 && (
+                  </div>
+                  {step < 4 && (
                       <div className="relative mx-2">
                         <div className="w-10 h-1 bg-gray-200 rounded-full overflow-hidden">
-                          <div
+                    <div
                             className={`h-full transition-all duration-500 ${
-                              current_step > step
+                        current_step > step
                                 ? "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 w-full"
                                 : "w-0"
-                            }`}
-                          />
+                      }`}
+                    />
                         </div>
                       </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+                  )}
+                </div>
+              ))}
+            </div>
               <div className="text-center">
                 <div className="inline-block px-3 py-1.5 rounded-full border border-purple-200 bg-purple-50">
                   <span className="text-purple-700 text-sm font-semibold">
@@ -313,40 +313,40 @@ export default function RegisterPage() {
                   </span>
                 </div>
               </div>
-            </div>
+          </div>
 
             {/* Steps Card Desktop */}
             <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-xl">
-              {current_step === 1 && (
-                <StepOne
-                  form_data={form_data}
-                  update_form_data={update_form_data}
-                  next_step={next_step}
-                />
-              )}
-              {current_step === 2 && (
-                <StepTwo
-                  form_data={form_data}
-                  update_form_data={update_form_data}
-                  next_step={next_step}
-                  prev_step={prev_step}
-                />
-              )}
-              {current_step === 3 && (
-                <StepThree
-                  form_data={form_data}
-                  update_form_data={update_form_data}
-                  next_step={next_step}
-                  prev_step={prev_step}
-                />
-              )}
-              {current_step === 4 && (
-                <StepFour
-                  form_data={form_data}
-                  update_form_data={update_form_data}
-                  prev_step={prev_step}
-                />
-              )}
+            {current_step === 1 && (
+              <StepOne
+                form_data={form_data}
+                update_form_data={update_form_data}
+                next_step={next_step}
+              />
+            )}
+            {current_step === 2 && (
+              <StepTwo
+                form_data={form_data}
+                update_form_data={update_form_data}
+                next_step={next_step}
+                prev_step={prev_step}
+              />
+            )}
+            {current_step === 3 && (
+              <StepThree
+                form_data={form_data}
+                update_form_data={update_form_data}
+                next_step={next_step}
+                prev_step={prev_step}
+              />
+            )}
+            {current_step === 4 && (
+              <StepFour
+                form_data={form_data}
+                update_form_data={update_form_data}
+                prev_step={prev_step}
+              />
+            )}
             </div>
           </div>
 

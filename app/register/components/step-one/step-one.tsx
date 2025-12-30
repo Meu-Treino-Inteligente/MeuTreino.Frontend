@@ -43,15 +43,15 @@ export function StepOne({
           Nome Completo
         </label>
         <div className="relative">
-          <input
-            type="text"
-            value={form_data.name}
-            onChange={(e) => {
-              const value = e.target.value;
-              const only_letters = value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "");
-              update_form_data("name", only_letters);
-            }}
-            placeholder="Digite seu nome e sobrenome"
+        <input
+          type="text"
+          value={form_data.name}
+          onChange={(e) => {
+            const value = e.target.value;
+            const only_letters = value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "");
+            update_form_data("name", only_letters);
+          }}
+          placeholder="Digite seu nome e sobrenome"
             className={`w-full px-3 py-2.5 bg-gray-50 border-2 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none transition-all text-sm ${
               form_data.name && !is_name_valid
                 ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
@@ -76,23 +76,23 @@ export function StepOne({
           Idade
         </label>
         <div className="relative">
-          <input
-            type="text"
-            inputMode="numeric"
-            value={form_data.age || ""}
-            onChange={(e) => {
-              const value = e.target.value.replace(/\D/g, "");
-              if (value.length <= 2) {
-                const num_value = value ? parseInt(value) : null;
-                if (num_value === null) {
-                  update_form_data("age", null);
-                } else {
-                  update_form_data("age", num_value);
-                }
+        <input
+          type="text"
+          inputMode="numeric"
+          value={form_data.age || ""}
+          onChange={(e) => {
+            const value = e.target.value.replace(/\D/g, "");
+            if (value.length <= 2) {
+              const num_value = value ? parseInt(value) : null;
+              if (num_value === null) {
+                update_form_data("age", null);
+              } else {
+                update_form_data("age", num_value);
               }
-            }}
-            placeholder="Sua idade"
-            maxLength={2}
+            }
+          }}
+          placeholder="Sua idade"
+          maxLength={2}
             className={`w-full px-3 py-2.5 bg-gray-50 border-2 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none transition-all text-sm ${
               form_data.age && !is_age_valid
                 ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
@@ -148,7 +148,7 @@ export function StepOne({
           <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-pink-700 to-orange-700 opacity-0 group-hover:opacity-100 transition-opacity" />
         )}
         <span className="relative z-10 flex items-center justify-center gap-2">
-          Próximo Passo
+        Próximo Passo
           <FontAwesomeIcon
             icon={faArrowRight}
             className={`w-3 h-3 transition-transform ${is_valid ? "group-hover:translate-x-1" : ""}`}

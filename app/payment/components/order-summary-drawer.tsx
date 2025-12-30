@@ -56,13 +56,13 @@ export function OrderSummaryDrawer({
         {/* Content - Visível apenas quando expandido */}
         {isExpanded && (
           <div className="flex-1 overflow-y-auto animate-fadeIn p-6">
-            <OrderSummary
-              plan={plan}
-              couponCode={couponCode}
-              discountAmount={discountAmount}
-              finalPrice={finalPrice}
-              formatPrice={formatPrice}
-            />
+                <OrderSummary
+                  plan={plan}
+                  couponCode={couponCode}
+                  discountAmount={discountAmount}
+                  finalPrice={finalPrice}
+                  formatPrice={formatPrice}
+                />
           </div>
         )}
       </div>

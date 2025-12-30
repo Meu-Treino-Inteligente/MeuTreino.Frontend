@@ -78,7 +78,7 @@ export function StepThree({
                 <div className="absolute inset-0 bg-purple-100/50" />
               )}
               <span className="relative z-10">
-                {day}
+              {day}
               </span>
             </button>
           ))}
@@ -122,7 +122,7 @@ export function StepThree({
             <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-pink-700 to-orange-700 opacity-0 group-hover:opacity-100 transition-opacity" />
           )}
           <span className="relative z-10 flex items-center justify-center gap-2">
-            Próximo
+          Próximo
             <FontAwesomeIcon
               icon={faArrowRight}
               className={`w-3 h-3 transition-transform ${is_valid ? "group-hover:translate-x-1" : ""}`}

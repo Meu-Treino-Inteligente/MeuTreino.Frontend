@@ -468,8 +468,8 @@ export default function PaymentPage() {
                     />
                   </div>
                   <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
-                    Método de Pagamento
-                  </h2>
+                  Método de Pagamento
+                </h2>
                 </div>
 
                 <PaymentMethodSelection
@@ -534,10 +534,10 @@ export default function PaymentPage() {
               <div className="bg-purple-50 border-2 border-purple-200 rounded-xl sm:rounded-2xl p-5">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center border border-purple-200 shrink-0">
-                    <FontAwesomeIcon
-                      icon={faShieldAlt}
+                  <FontAwesomeIcon
+                    icon={faShieldAlt}
                       className="text-xl text-purple-600"
-                    />
+                  />
                   </div>
                   <div className="flex-1">
                     <p className="text-gray-900 font-bold mb-1.5">

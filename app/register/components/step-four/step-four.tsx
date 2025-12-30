@@ -131,7 +131,7 @@ export function StepFour({
                 <div className="absolute inset-0 bg-purple-100/50" />
               )}
               <span className="relative z-10">
-                {count}
+              {count}
               </span>
             </button>
           ))}
@@ -183,17 +183,17 @@ export function StepFour({
             <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-pink-700 to-orange-700 opacity-0 group-hover:opacity-100 transition-opacity" />
           )}
           <span className="relative z-10 flex items-center justify-center gap-2">
-            {is_loading ? (
-              <>
-                <FontAwesomeIcon
-                  icon={faSpinner}
+          {is_loading ? (
+            <>
+              <FontAwesomeIcon
+                icon={faSpinner}
                   className="w-3 h-3 animate-spin"
-                />
-                Enviando...
-              </>
-            ) : (
+              />
+              Enviando...
+            </>
+          ) : (
               <>Enviar informações</>
-            )}
+          )}
           </span>
         </button>
       </div>
