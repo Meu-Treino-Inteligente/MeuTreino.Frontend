@@ -275,7 +275,7 @@ export default function SelectPlanPage() {
                           <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent mb-1">
                             {format_price(plan.price)}
                           </div>
-                          <p className="text-gray-600 text-xs">por mês</p>
+                          <p className="text-gray-600 text-xs">pagamento único</p>
                         </div>
                         <div className="flex-1">
                           <PlanDescription description={plan.description} />
@@ -341,7 +341,7 @@ export default function SelectPlanPage() {
                       <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent mb-1">
                         {format_price(plan.price)}
                       </div>
-                      <p className="text-gray-600 text-sm">por mês</p>
+                      <p className="text-gray-600 text-sm">pagamento único</p>
                     </div>
                     <div className="flex-1">
                       <PlanDescription description={plan.description} />

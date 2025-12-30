@@ -74,7 +74,7 @@ export default function CouponsPage() {
     {
       title: "Pagamento Automático",
       description:
-        "Seus ganhos são creditados automaticamente após cada venda. Sem burocracias ou processos manuais.",
+        "Seus ganhos são pagos automaticamente a cada 30 dias via PIX para a chave cadastrada no seu painel. Sem burocracias ou processos manuais.",
       icon: faCheckCircle,
       color: "from-blue-500 to-cyan-500",
     },

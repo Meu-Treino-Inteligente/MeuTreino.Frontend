@@ -340,7 +340,7 @@ export function TrainingPreview({ form_data }: TrainingPreviewProps) {
                     <div className="bg-white rounded-xl p-4 border-2 border-gray-200 text-center shadow-xl">
                       <FontAwesomeIcon
                         icon={faCheckCircle}
-                        className="text-gray-400 text-2xl mb-2 opacity-50"
+                        className="text-gray-500 text-2xl mb-2 opacity-50"
                       />
                       <p className="text-gray-500 text-xs">
                         {restDays}{" "}

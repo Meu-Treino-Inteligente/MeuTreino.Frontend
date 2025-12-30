@@ -1,31 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export function HeaderNavigation() {
-  const pathname = usePathname();
-  const isHomePage = pathname === "/";
-  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-black/90 backdrop-blur-xl border-b border-purple-500/30 shadow-lg shadow-purple-500/10"
-          : "bg-transparent"
-      }`}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-xl border-b border-purple-500/30 shadow-lg shadow-purple-500/10">
       <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
         <Link
           href="/"
@@ -36,31 +18,22 @@ export function HeaderNavigation() {
         </Link>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden md:flex items-center gap-6">
           <li>
             <Link
-              href={isHomePage ? "#inicio" : "/#inicio"}
+              href="/how-it-works"
               className="text-gray-300 hover:text-purple-400 transition-colors font-medium relative group"
             >
-              Início
+              Como Funciona
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 group-hover:w-full transition-all" />
             </Link>
           </li>
           <li>
             <Link
-              href={isHomePage ? "#features" : "/#features"}
+              href="/faq"
               className="text-gray-300 hover:text-purple-400 transition-colors font-medium relative group"
             >
-              Recursos
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 group-hover:w-full transition-all" />
-            </Link>
-          </li>
-          <li>
-            <Link
-              href={isHomePage ? "#sobre" : "/#sobre"}
-              className="text-gray-300 hover:text-purple-400 transition-colors font-medium relative group"
-            >
-              Sobre
+              FAQ
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 group-hover:w-full transition-all" />
             </Link>
           </li>
@@ -71,15 +44,6 @@ export function HeaderNavigation() {
             >
               <span className="relative z-10">Sou Influencer</span>
               <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/how-it-works"
-              className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-bold hover:shadow-lg hover:shadow-purple-500/50 transition-all transform hover:scale-105 relative overflow-hidden group"
-            >
-              <span className="relative z-10">Como Funciona</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
           </li>
           <li>
@@ -130,29 +94,20 @@ export function HeaderNavigation() {
         <ul className="container mx-auto px-6 py-4 flex flex-col gap-4">
           <li>
             <Link
-              href={isHomePage ? "#inicio" : "/#inicio"}
+              href="/how-it-works"
               onClick={() => setMobileMenuOpen(false)}
               className="text-gray-300 hover:text-purple-400 transition-colors font-medium block py-2"
             >
-              Início
+              Como Funciona
             </Link>
           </li>
           <li>
             <Link
-              href={isHomePage ? "#features" : "/#features"}
+              href="/faq"
               onClick={() => setMobileMenuOpen(false)}
               className="text-gray-300 hover:text-purple-400 transition-colors font-medium block py-2"
             >
-              Recursos
-            </Link>
-          </li>
-          <li>
-            <Link
-              href={isHomePage ? "#sobre" : "/#sobre"}
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-gray-300 hover:text-purple-400 transition-colors font-medium block py-2"
-            >
-              Sobre
+              FAQ
             </Link>
           </li>
           <li>
@@ -162,15 +117,6 @@ export function HeaderNavigation() {
               className="block px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-full text-white font-bold text-center"
             >
               Sou Influencer
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/how-it-works"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-bold text-center"
-            >
-              Como Funciona
             </Link>
           </li>
           <li>

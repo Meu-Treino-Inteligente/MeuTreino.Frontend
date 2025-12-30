@@ -13,18 +13,20 @@ import {
 import { HeaderNavigation } from "../components/header-navigation/header-navigation";
 import { FooterSection } from "../components/footer-section/footer-section";
 import Link from "next/link";
+import { createInfluencerRequest } from "@/services/influencers/influencer-request.service";
+import { ApiError } from "@/types/api-error.types";
 
 export default function InfluencerPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     instagram: "",
-    followers: "",
-    message: "",
+    phone: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitError, setSubmitError] = useState<string>("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -53,10 +55,6 @@ export default function InfluencerPage() {
       newErrors.instagram = "Instagram é obrigatório";
     }
 
-    if (!formData.followers.trim()) {
-      newErrors.followers = "Número de seguidores é obrigatório";
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -69,12 +67,39 @@ export default function InfluencerPage() {
     }
 
     setIsSubmitting(true);
+    setSubmitError("");
 
-    // Simular envio (aqui você integraria com sua API)
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await createInfluencerRequest({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        instagram: formData.instagram.trim(),
+        phone: formData.phone.trim() || undefined,
+      });
+
       setIsSubmitted(true);
-    }, 2000);
+    } catch (error) {
+      console.error("Erro ao enviar solicitação:", error);
+
+      // Tratar erros específicos da API
+      let errorMessage =
+        "Erro ao enviar solicitação. Tente novamente mais tarde.";
+
+      const apiError = error as ApiError;
+
+      if (apiError?.message) {
+        errorMessage = apiError.message;
+      } else if (apiError?.error) {
+        errorMessage = apiError.error;
+      } else if (apiError?.status === 400) {
+        errorMessage =
+          "Dados inválidos. Verifique as informações e tente novamente.";
+      }
+
+      setSubmitError(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -93,7 +118,7 @@ export default function InfluencerPage() {
               Solicitação Enviada!
             </h1>
             <p className="text-gray-600 mb-6 text-sm">
-              Entraremos em contato em até 48 horas.
+              Obrigado por nos enviar sua solicitação. Entraremos em contato em breve.
             </p>
             <Link
               href="/"
@@ -227,44 +252,29 @@ export default function InfluencerPage() {
                 )}
               </div>
 
-              {/* Seguidores */}
+              {/* Telefone */}
               <div>
                 <label className="block text-gray-900 font-semibold mb-1.5 text-sm">
-                  Seguidores <span className="text-red-500">*</span>
+                  Telefone (opcional)
                 </label>
                 <input
-                  type="text"
-                  name="followers"
-                  value={formData.followers}
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
                   onChange={handleChange}
-                  placeholder="50.000"
-                  className={`w-full px-3 py-2.5 bg-gray-50 border-2 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none transition-all text-sm ${
-                    errors.followers
-                      ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
-                      : "border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20"
-                  }`}
+                  placeholder="(11) 99999-9999"
+                  className="w-full px-3 py-2.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all text-sm"
                 />
-                {errors.followers && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.followers}
-                  </p>
-                )}
               </div>
 
-              {/* Mensagem */}
-              <div>
-                <label className="block text-gray-900 font-semibold mb-1.5 text-sm">
-                  Mensagem (opcional)
-                </label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Mensagem..."
-                  rows={3}
-                  className="w-full px-3 py-2.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none text-sm"
-                />
-              </div>
+              {/* Error Message */}
+              {submitError && (
+                <div className="bg-red-50 border-2 border-red-200 rounded-lg p-3">
+                  <p className="text-red-600 text-sm font-medium">
+                    {submitError}
+                  </p>
+                </div>
+              )}
 
               {/* Submit Button */}
               <button

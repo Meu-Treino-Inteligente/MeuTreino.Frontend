@@ -35,29 +35,11 @@ export function FooterSection() {
             <ul className="space-y-2 sm:space-y-3">
               <li>
                 <Link
-                  href="#inicio"
+                  href="/"
                   className="text-sm sm:text-base text-gray-400 hover:text-purple-400 transition-colors flex items-center gap-2 group"
                 >
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                   Início
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#features"
-                  className="text-sm sm:text-base text-gray-400 hover:text-purple-400 transition-colors flex items-center gap-2 group"
-                >
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  Recursos
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#sobre"
-                  className="text-sm sm:text-base text-gray-400 hover:text-purple-400 transition-colors flex items-center gap-2 group"
-                >
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  Sobre
                 </Link>
               </li>
               <li>
@@ -67,6 +49,24 @@ export function FooterSection() {
                 >
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                   Como Funciona
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/faq"
+                  className="text-sm sm:text-base text-gray-400 hover:text-purple-400 transition-colors flex items-center gap-2 group"
+                >
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/influencer/coupons"
+                  className="text-sm sm:text-base text-gray-400 hover:text-purple-400 transition-colors flex items-center gap-2 group"
+                >
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  Sou Influencer
                 </Link>
               </li>
             </ul>
@@ -80,13 +80,8 @@ export function FooterSection() {
                 <span>📧</span>
                 <span className="break-all">contato@meutreino.com</span>
               </li>
-              <li className="text-sm sm:text-base text-gray-400 flex items-center gap-2">
-                <span>💬</span>
-                Suporte 24/7
-              </li>
-              <li className="text-sm sm:text-base text-gray-400 flex items-center gap-2">
-                <span>⚡</span>
-                Resposta em até 1h
+              <li className="text-sm sm:text-base text-gray-400">
+                Suporte exclusivamente por email
               </li>
             </ul>
           </div>
