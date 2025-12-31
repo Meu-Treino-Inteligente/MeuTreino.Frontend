@@ -130,3 +130,25 @@ export async function getUserSiteBySlug(
     config
   );
 }
+
+export interface UserSiteSlugResponse {
+  id: number;
+  userId: number;
+  slug: string;
+  createdAt: string;
+  status: "pending" | "ready" | "error";
+  message: string | null;
+}
+
+export async function getUserSiteByUserId(
+  userId: number,
+  config?: { baseUrl?: string; headers?: Record<string, string> }
+): Promise<UserSiteSlugResponse> {
+  return apiRequest<UserSiteSlugResponse>(
+    `/api/get/user-site/by-user/${userId}`,
+    {
+      method: "GET",
+    },
+    config
+  );
+}
