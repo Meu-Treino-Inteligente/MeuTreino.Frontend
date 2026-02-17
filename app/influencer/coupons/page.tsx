@@ -22,11 +22,11 @@ export default function CouponsPage() {
 
   // Cálculos baseados em R$ 12,90
   const planPrice = 12.9;
-  const discount = 20;
+  const discount = 15;
   const finalPrice = planPrice * (1 - discount / 100); // R$ 10,32
-  const commissionPerSale = finalPrice * 0.2; // 20% de R$ 10,32 = R$ 2,06
+  const commissionPerSale = finalPrice * 0.30; // 30% de R$ 10,97 = R$ 3,29
 
-  const salesOptions = [10, 25, 50, 100, 1000];
+  const salesOptions = [10, 25, 50, 100, 1000, 10000];
   const totalEarnings = commissionPerSale * selectedSales;
   const steps = [
     {
@@ -55,9 +55,9 @@ export default function CouponsPage() {
     },
     {
       number: 4,
-      title: "Ganhe 20% de Cada Venda",
+      title: "Ganhe 30% de Cada Venda",
       description:
-        "A cada compra realizada com seu cupom, você ganha automaticamente 20% do valor da venda. Quanto mais vendas, mais você ganha!",
+        "A cada compra realizada com seu cupom, você ganha automaticamente 30% do valor da venda. Quanto mais vendas, mais você ganha!",
       icon: faDollarSign,
       gradient: "from-purple-500 to-orange-500",
     },
@@ -65,9 +65,9 @@ export default function CouponsPage() {
 
   const benefits = [
     {
-      title: "Comissão de 20%",
+      title: "Comissão de 30%",
       description:
-        "Ganhe 20% de comissão sobre cada venda realizada com seu cupom. Sem limites de ganhos!",
+        "Ganhe 30% de comissão sobre cada venda realizada com seu cupom. Sem limites de ganhos!",
       icon: faPercent,
       color: "from-green-500 to-emerald-500",
     },
@@ -113,7 +113,7 @@ export default function CouponsPage() {
               </span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-              Descubra como ganhar 20% de comissão a cada venda realizada com seu cupom exclusivo
+              Descubra como ganhar 30% de comissão a cada venda realizada com seu cupom exclusivo
             </p>
           </div>
         </div>
@@ -194,7 +194,7 @@ export default function CouponsPage() {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <span className="text-gray-600 text-sm block mb-1">
-                        Sua Comissão por Venda (20%)
+                        Sua Comissão por Venda (30%)
                       </span>
                       <span className="text-3xl font-black text-orange-600">
                         R$ {commissionPerSale.toFixed(2)}
@@ -208,7 +208,7 @@ export default function CouponsPage() {
                     </div>
                   </div>
                   <p className="text-gray-600 text-sm mb-6">
-                    A cada venda realizada com seu cupom, você ganha automaticamente 20% do valor da compra.
+                    A cada venda realizada com seu cupom, você ganha automaticamente 30% do valor da compra.
                   </p>
                   
                   {/* Dropdown de Vendas */}
