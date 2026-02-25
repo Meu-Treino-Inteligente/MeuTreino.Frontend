@@ -10,6 +10,7 @@ interface PaymentMethodSelectionProps {
   isLoading: boolean;
   finalPrice: number | null;
   onPixClick: () => void;
+  onCardClick: () => void;
   formatPrice: (price: number | null) => string;
 }
 
@@ -18,6 +19,7 @@ export function PaymentMethodSelection({
   isLoading,
   finalPrice,
   onPixClick,
+  onCardClick,
   formatPrice,
 }: PaymentMethodSelectionProps) {
   return (
@@ -74,35 +76,54 @@ export function PaymentMethodSelection({
 
       {/* Card Cartão de Crédito */}
       <button
-        disabled
-        className="relative bg-gray-50 border-2 border-gray-200 rounded-xl sm:rounded-2xl p-6 text-left opacity-50 cursor-not-allowed"
+        type="button"
+        onClick={onCardClick}
+        disabled={isLoading || selectedMethod === "card"}
+        className={`relative group bg-white border-2 rounded-xl sm:rounded-2xl p-6 text-left transition-all duration-300 ${
+          selectedMethod === "card"
+            ? "border-purple-500 shadow-xl shadow-purple-500/40 scale-[1.02] ring-2 ring-purple-500/30 bg-purple-50"
+            : "border-gray-200 hover:border-purple-300 hover:scale-[1.01] hover:shadow-lg cursor-pointer"
+        } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
       >
-        <div className="absolute top-4 right-4">
-          <span className="px-3 py-1.5 bg-gray-200 text-gray-600 text-xs font-semibold rounded-full border border-gray-300">
-            Em breve
-          </span>
-        </div>
         <div className="flex items-start justify-between mb-5">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center">
+            <div
+              className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                selectedMethod === "card"
+                  ? "bg-purple-100 border border-purple-300"
+                  : "bg-gray-100 border border-gray-200 group-hover:border-purple-300"
+              }`}
+            >
               <FontAwesomeIcon
                 icon={faCreditCard}
-                className="text-2xl text-gray-400"
+                className={`text-2xl transition-colors ${
+                  selectedMethod === "card"
+                    ? "text-purple-600"
+                    : "text-gray-400 group-hover:text-purple-600"
+                }`}
               />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-gray-400">
+              <h3 className="text-xl font-bold text-gray-900 mb-1">
                 Cartão de Crédito
               </h3>
-              <p className="text-sm text-gray-400">Em breve</p>
+              <p className="text-sm text-gray-600">Pagamento recorrente</p>
             </div>
           </div>
+          {selectedMethod === "card" && (
+            <div className="w-7 h-7 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/50">
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                className="text-white text-xs"
+              />
+            </div>
+          )}
         </div>
         <div className="space-y-1">
-          <p className="text-2xl font-black text-gray-400">
+          <p className="text-2xl font-black text-gray-900">
             {formatPrice(finalPrice)}
           </p>
-          <p className="text-xs text-gray-400">Pagamento recorrente</p>
+          <p className="text-xs text-gray-500">Pagamento recorrente</p>
         </div>
       </button>
     </div>

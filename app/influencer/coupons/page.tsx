@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import { HeaderNavigation } from "@/app/components/header-navigation/header-navigation";
 import { FooterSection } from "@/app/components/footer-section/footer-section";
+import { formatPrice } from "@/utils/format";
 
 export default function CouponsPage() {
   const [selectedSales, setSelectedSales] = useState(10);
@@ -175,7 +176,7 @@ export default function CouponsPage() {
                 <div className="flex items-center justify-between pb-4 border-b border-gray-200">
                   <span className="text-gray-600 text-lg">Valor do Plano:</span>
                   <span className="text-2xl font-black text-gray-900">
-                    R$ {planPrice.toFixed(2)}
+                    {formatPrice(planPrice)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between pb-4 border-b border-gray-200">
@@ -187,7 +188,7 @@ export default function CouponsPage() {
                 <div className="flex items-center justify-between pb-4 border-b-2 border-gray-300">
                   <span className="text-gray-900 text-xl font-bold">Valor Final:</span>
                   <span className="text-3xl font-black bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-                    R$ {finalPrice.toFixed(2)}
+                    {formatPrice(finalPrice)}
                   </span>
                 </div>
                 <div className="bg-gradient-to-br from-orange-50 to-red-50 border-2 border-orange-200 rounded-2xl p-6 mt-6">
@@ -197,7 +198,7 @@ export default function CouponsPage() {
                         Sua Comissão por Venda (20%)
                       </span>
                       <span className="text-3xl font-black text-orange-600">
-                        R$ {commissionPerSale.toFixed(2)}
+                        {formatPrice(commissionPerSale)}
                       </span>
                     </div>
                     <div className="w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
@@ -242,7 +243,7 @@ export default function CouponsPage() {
                             Total de Ganhos ({selectedSales} {selectedSales === 1 ? "venda" : "vendas"}):
                           </span>
                           <span className="text-3xl font-black bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-                            R$ {totalEarnings.toFixed(2)}
+                            {formatPrice(totalEarnings)}
                           </span>
                         </div>
                         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">

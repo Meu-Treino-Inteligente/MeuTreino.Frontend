@@ -14,11 +14,15 @@ import { OrderSummary } from "./components/order-summary";
 import { PaymentMethodSelection } from "./components/payment-method-selection";
 import { PixPaymentForm } from "./components/pix-payment-form";
 import { PixQrCodeDisplay } from "./components/pix-qrcode-display";
+import { Elements } from "@stripe/react-stripe-js";
+import { CardPaymentElementsForm } from "./components/card-payment-elements-form";
+import { stripePromise } from "@/utils/stripe";
 import { OrderSummaryDrawer } from "./components/order-summary-drawer";
 import {
   createPixQrcode,
   getPixQrcodeStatus,
 } from "@/services/payments/pix.service";
+import { createStripeCardConfirm } from "@/services/payments/stripe.service";
 import { getPlanById } from "@/services/plans/plan.service";
 import { validateCoupon } from "@/services/coupons/coupon.service";
 import { Plan } from "@/types/plans/plan.types";
@@ -30,6 +34,7 @@ import {
   format_phone,
   unformat_phone,
 } from "@/utils/validation";
+import { formatPrice } from "@/utils/format";
 import { load_user_id, clear_register_session } from "@/infrastructure/cookies";
 
 export default function PaymentPage() {
@@ -69,6 +74,12 @@ export default function PaymentPage() {
   const [is_validating_coupon, set_is_validating_coupon] = useState(false);
   const [final_price, set_final_price] = useState<number | null>(null);
   const [discount_amount, set_discount_amount] = useState<number>(0);
+
+  // Cartão (Stripe Elements)
+  const [card_name, set_card_name] = useState<string>("");
+  const [card_error, set_card_error] = useState<string>("");
+  const [card_success, set_card_success] = useState(false);
+  const [card_submitting, set_card_submitting] = useState(false);
 
   // ========== FUNÇÕES ==========
   // Função para inicializar planId e cupom da query string
@@ -349,6 +360,62 @@ export default function PaymentPage() {
     }
   };
 
+  const handle_card_click = () => {
+    set_selected_method("card");
+    set_pix_qrcode(null);
+    set_pix_code(null);
+    set_card_error("");
+    set_card_success(false);
+  };
+
+  const handle_card_submit = async (paymentMethodId: string) => {
+    if (!validate_form()) {
+      set_card_error(
+        "Preencha nome, e-mail, telefone e CPF acima para continuar."
+      );
+      return;
+    }
+    set_card_error("");
+    if (!user_id) {
+      set_card_error(
+        "Erro: ID do usuário não encontrado. Volte e crie seu perfil novamente."
+      );
+      return;
+    }
+    if (!plan_id) {
+      set_card_error("Erro: Plano não selecionado. Selecione um plano.");
+      return;
+    }
+    if (coupon_code.trim() && coupon_error) {
+      set_card_error("Corrija o cupom antes de continuar.");
+      return;
+    }
+    set_card_submitting(true);
+    try {
+      await createStripeCardConfirm({
+        userId: user_id,
+        planId: plan_id,
+        customer: {
+          name: name.trim(),
+          email: email.trim(),
+          cpf: cpf.trim(),
+          cellphone: cellphone.trim() ? unformat_phone(cellphone) : undefined,
+        },
+        couponCode: coupon_code.trim() || undefined,
+        paymentMethodId,
+      });
+      set_card_success(true);
+    } catch (err: unknown) {
+      const msg =
+        err && typeof err === "object" && "message" in err
+          ? String((err as { message?: string }).message)
+          : "Erro ao processar pagamento. Tente novamente.";
+      set_card_error(msg);
+    } finally {
+      set_card_submitting(false);
+    }
+  };
+
   const handle_copy_code = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (pix_code) {
@@ -356,14 +423,6 @@ export default function PaymentPage() {
       set_copied(true);
       setTimeout(() => set_copied(false), 2000);
     }
-  };
-
-  const format_price = (price: number | null) => {
-    if (price === null) return "R$ 0,00";
-    return price.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
   };
 
   // ========== USEEFFECTS ==========
@@ -477,8 +536,162 @@ export default function PaymentPage() {
                   isLoading={is_loading}
                   finalPrice={final_price}
                   onPixClick={handle_pix_payment}
-                  formatPrice={format_price}
+                  onCardClick={handle_card_click}
+                  formatPrice={formatPrice}
                 />
+
+                {/* Cartão de Crédito - dados do titular + tela de cartão */}
+                {selected_method === "card" && ( 
+                  <div className="mt-8 pt-8 border-t border-gray-200 space-y-8">
+                    {/* Dados do titular (obrigatórios para o pagamento) */}
+                    <div className="space-y-5">
+                      <h3 className="text-lg font-bold text-gray-900">
+                        Dados do titular
+                      </h3>
+                      <p className="text-gray-600 text-sm -mt-2">
+                        Preencha seus dados antes de informar o cartão.
+                      </p>
+                      <div>
+                        <label className="block text-gray-900 text-sm font-semibold mb-1.5">
+                          Nome completo <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={name}
+                          onChange={(e) => {
+                            set_name(e.target.value);
+                            set_name_error("");
+                          }}
+                          placeholder="Seu nome completo"
+                          className={`w-full px-4 py-3.5 bg-gray-50 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none transition-all text-sm ${
+                            name_error
+                              ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-50"
+                              : "border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30"
+                          }`}
+                        />
+                        {name_error && (
+                          <p className="text-red-600 text-xs mt-1 font-medium">
+                            {name_error}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <label className="block text-gray-900 text-sm font-semibold mb-1.5">
+                          E-mail (para receber o treino) <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => handle_email_change(e.target.value)}
+                          placeholder="seu@email.com"
+                          className={`w-full px-4 py-3.5 bg-gray-50 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none transition-all text-sm ${
+                            email_error
+                              ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-50"
+                              : "border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30"
+                          }`}
+                        />
+                        {email_error && (
+                          <p className="text-red-600 text-xs mt-1 font-medium">
+                            {email_error}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <label className="block text-gray-900 text-sm font-semibold mb-1.5">
+                          Telefone <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={cellphone}
+                          onChange={(e) => handle_phone_change(e.target.value)}
+                          placeholder="(00) 00000-0000"
+                          maxLength={15}
+                          className={`w-full px-4 py-3.5 bg-gray-50 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none transition-all text-sm ${
+                            cellphone_error
+                              ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-50"
+                              : "border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30"
+                          }`}
+                        />
+                        {cellphone_error && (
+                          <p className="text-red-600 text-xs mt-1 font-medium">
+                            {cellphone_error}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <label className="block text-gray-900 text-sm font-semibold mb-1.5">
+                          CPF <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={cpf}
+                          onChange={(e) => handle_cpf_change(e.target.value)}
+                          placeholder="000.000.000-00"
+                          maxLength={14}
+                          className={`w-full px-4 py-3.5 bg-gray-50 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none transition-all text-sm ${
+                            cpf_error
+                              ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-50"
+                              : "border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30"
+                          }`}
+                        />
+                        {cpf_error && (
+                          <p className="text-red-600 text-xs mt-1 font-medium">
+                            {cpf_error}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <label className="block text-gray-900 text-sm font-semibold mb-1.5">
+                          Cupom de desconto
+                        </label>
+                        <input
+                          type="text"
+                          value={coupon_code}
+                          onChange={(e) => handle_coupon_change(e.target.value.toUpperCase())}
+                          placeholder="Código do cupom"
+                          className={`w-full px-4 py-3.5 bg-gray-50 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none transition-all text-sm ${
+                            coupon_error
+                              ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 bg-red-50"
+                              : "border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30"
+                          }`}
+                        />
+                        {coupon_error && (
+                          <p className="text-red-600 text-xs mt-1 font-medium">
+                            {coupon_error}
+                          </p>
+                        )}
+                        {coupon_code.trim() && !coupon_error && discount_amount > 0 && (
+                          <p className="text-green-600 text-xs mt-1 font-medium">
+                            Cupom aplicado! Desconto de {formatPrice(discount_amount)}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {stripePromise && (
+                      <Elements stripe={stripePromise}>
+                        <CardPaymentElementsForm
+                          cardName={card_name}
+                          onCardNameChange={set_card_name}
+                          onSubmit={handle_card_submit}
+                          isSubmitting={card_submitting}
+                          formatPrice={formatPrice}
+                          finalPrice={final_price}
+                        />
+                      </Elements>
+                    )}
+                    {card_error && (
+                      <p className="mt-3 text-red-600 text-sm font-medium">
+                        {card_error}
+                      </p>
+                    )}
+                    {card_success && (
+                      <p className="mt-3 text-green-600 text-sm font-medium">
+                        Pagamento aprovado! Obrigado pela compra.
+                      </p>
+                    )}
+                  </div>
+                )}
 
                 {/* PIX Payment Details */}
                 {selected_method === "pix" && (
@@ -507,7 +720,7 @@ export default function PaymentPage() {
                         onCpfChange={handle_cpf_change}
                         onCouponCodeChange={handle_coupon_change}
                         onGenerateQrCode={handle_pix_payment}
-                        formatPrice={format_price}
+                        formatPrice={formatPrice}
                       />
                     ) : is_loading ? (
                       <div className="flex flex-col items-center justify-center py-12">
@@ -560,7 +773,7 @@ export default function PaymentPage() {
                   couponCode={coupon_code}
                   discountAmount={discount_amount}
                   finalPrice={final_price}
-                  formatPrice={format_price}
+                  formatPrice={formatPrice}
                 />
               </div>
             </div>
@@ -574,7 +787,7 @@ export default function PaymentPage() {
         couponCode={coupon_code}
         discountAmount={discount_amount}
         finalPrice={final_price}
-        formatPrice={format_price}
+        formatPrice={formatPrice}
       />
 
       <FooterSection />

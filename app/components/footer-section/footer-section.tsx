@@ -90,7 +90,7 @@ export function FooterSection() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
           <p className="text-xs sm:text-sm text-gray-500 text-center md:text-left">
-            &copy; 2025 Meu Treino Inteligente. Todos os direitos reservados.
+            &copy; 2026 Meu Treino Inteligente. Todos os direitos reservados.
           </p>
           <div className="flex gap-4 sm:gap-6 text-xs sm:text-sm">
             <Link href="#" className="text-gray-500 hover:text-purple-400 transition-colors">

@@ -16,6 +16,7 @@ import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import { getAllPlans } from "@/services/plans/plan.service";
 import { Plan } from "@/types/plans/plan.types";
+import { formatPrice } from "@/utils/format";
 
 // Componente para renderizar a descrição do plano com ícones FontAwesome
 const PlanDescription = ({ description }: { description: string }) => {
@@ -155,13 +156,6 @@ export default function SelectPlanPage() {
     router.push(`/payment?${params.toString()}`);
   };
 
-  const format_price = (price: number) => {
-    return price.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
-  };
-
   if (is_loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
@@ -273,7 +267,7 @@ export default function SelectPlanPage() {
                         </h3>
                         <div className="mb-4">
                           <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent mb-1">
-                            {format_price(plan.price)}
+                            {formatPrice(plan.price)}
                           </div>
                           <p className="text-gray-600 text-xs">pagamento único</p>
                         </div>
@@ -339,7 +333,7 @@ export default function SelectPlanPage() {
                     </h3>
                     <div className="mb-4">
                       <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent mb-1">
-                        {format_price(plan.price)}
+                        {formatPrice(plan.price)}
                       </div>
                       <p className="text-gray-600 text-sm">pagamento único</p>
                     </div>
