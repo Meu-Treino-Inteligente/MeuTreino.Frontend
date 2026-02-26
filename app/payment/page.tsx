@@ -22,6 +22,7 @@ import {
   createPixQrcode,
   getPixQrcodeStatus,
 } from "@/services/payments/pix.service";
+import type { PixQrcodeData } from "@/types/payments/pix.types";
 import { createStripeCardConfirm } from "@/services/payments/stripe.service";
 import { getPlanById } from "@/services/plans/plan.service";
 import { validateCoupon } from "@/services/coupons/coupon.service";
@@ -49,6 +50,7 @@ export default function PaymentPage() {
   const [is_loading, set_is_loading] = useState(false);
   const [pix_qrcode, set_pix_qrcode] = useState<string | null>(null);
   const [pix_code, set_pix_code] = useState<string | null>(null);
+  const [ticket_url, set_ticket_url] = useState<string | null>(null);
   const [copied, set_copied] = useState(false);
   const [expires_at, set_expires_at] = useState<Date | null>(null);
   const [time_remaining, set_time_remaining] = useState<string>("");
@@ -195,6 +197,7 @@ export default function PaymentPage() {
           // QR Code expirado - limpar dados do pagamento
           set_pix_qrcode(null);
           set_pix_code(null);
+          set_ticket_url(null);
           set_selected_method(null);
           set_payment_id(null);
           set_payment_status("EXPIRED");
@@ -273,6 +276,7 @@ export default function PaymentPage() {
       set_selected_method("pix");
       set_pix_qrcode(null);
       set_pix_code(null);
+      set_ticket_url(null);
       return;
     }
 
@@ -322,20 +326,24 @@ export default function PaymentPage() {
         },
       });
 
-      if (response.data) {
-        // A API retorna brCode (código PIX completo) e brCodeBase64 (imagem do QR Code)
-        set_pix_code(response.data.brCode || ""); // Código PIX completo para copiar e colar
-        set_pix_qrcode(response.data.brCodeBase64 || ""); // Imagem base64 do QR Code
+      // Aceita resposta com { data: {...} } ou payload no topo (paymentId, qrCode, qrCodeBase64, etc.)
+      const raw = response as { data?: PixQrcodeData } & Partial<PixQrcodeData>;
+      const payload = raw.data ?? raw;
+
+      if (payload?.qrCodeBase64 ?? payload?.qrCode) {
+        set_pix_code(payload.qrCode ?? "");
+        set_pix_qrcode(payload.qrCodeBase64 ?? "");
+        set_ticket_url(payload.ticketUrl ?? null);
 
         // Calcular expiração se não vier expiresAt
         let expiry_date: Date;
-        if (response.data.expiresAt) {
-          expiry_date = new Date(response.data.expiresAt);
+        if (payload.expiresAt) {
+          expiry_date = new Date(payload.expiresAt);
           set_expires_at(expiry_date);
-        } else if (response.data.expiresIn) {
+        } else if (payload.expiresIn) {
           expiry_date = new Date();
           expiry_date.setSeconds(
-            expiry_date.getSeconds() + response.data.expiresIn
+            expiry_date.getSeconds() + payload.expiresIn
           );
           set_expires_at(expiry_date);
         } else {
@@ -345,12 +353,10 @@ export default function PaymentPage() {
           set_expires_at(expiry_date);
         }
 
-        // Atualizar estados do pagamento
-        if (user_id && expiry_date) {
-          const payment_id_value = response.data.id;
-          set_payment_id(payment_id_value);
-          set_payment_status(response.data.status?.toUpperCase() || "PENDING");
-        }
+        // paymentId usado em GET /api/check/pix-qrcode/:id para polling (pending → approved)
+        const payment_id_value = payload.paymentId ?? payload.id;
+        set_payment_id(payment_id_value ?? null);
+        set_payment_status(payload.status?.toUpperCase() ?? "PENDING");
       }
     } catch (error) {
       console.error("Erro ao gerar QR Code PIX:", error);
@@ -364,6 +370,7 @@ export default function PaymentPage() {
     set_selected_method("card");
     set_pix_qrcode(null);
     set_pix_code(null);
+    set_ticket_url(null);
     set_card_error("");
     set_card_success(false);
   };
@@ -696,7 +703,7 @@ export default function PaymentPage() {
                 {/* PIX Payment Details */}
                 {selected_method === "pix" && (
                   <div className="mt-8 pt-8 border-t border-gray-200">
-                    {!pix_qrcode ? (
+                    {!pix_qrcode && !pix_code ? (
                       <PixPaymentForm
                         name={name}
                         email={email}
@@ -722,7 +729,7 @@ export default function PaymentPage() {
                         onGenerateQrCode={handle_pix_payment}
                         formatPrice={formatPrice}
                       />
-                    ) : is_loading ? (
+                    ) : is_loading && !pix_qrcode && !pix_code ? (
                       <div className="flex flex-col items-center justify-center py-12">
                         <FontAwesomeIcon
                           icon={faSpinner}
@@ -730,10 +737,11 @@ export default function PaymentPage() {
                         />
                         <p className="text-gray-600">Gerando QR Code PIX...</p>
                       </div>
-                    ) : pix_qrcode ? (
+                    ) : (pix_qrcode || pix_code) ? (
                       <PixQrCodeDisplay
-                        pixQrcode={pix_qrcode}
-                        pixCode={pix_code || ""}
+                        pixQrcode={pix_qrcode ?? ""}
+                        pixCode={pix_code ?? ""}
+                        ticketUrl={ticket_url ?? undefined}
                         timeRemaining={time_remaining}
                         copied={copied}
                         onCopyCode={handle_copy_code}

@@ -11,18 +11,25 @@ export interface CreatePixQrcodeRequest {
   metadata?: Record<string, string>;
 }
 
+/** Resposta da API (Mercado Pago): criar PIX e polling de status */
 export interface PixQrcodeData {
-  id: string;
-  brCode: string; // Código PIX completo para copiar e colar (000201...)
-  brCodeBase64: string; // Imagem do QR Code em base64 (data:image/png;base64,...)
-  amount: number;
+  /** ID do pagamento — usar em GET /api/check/pix-qrcode/:id para polling (pending → approved) */
+  paymentId: string;
+  /** Compatibilidade: alguns backends podem retornar id em vez de paymentId */
+  id?: string;
+  /** Código PIX "copia e cola" para o usuário colar no app do banco */
+  qrCode: string;
+  /** Imagem do QR em base64 — exibir como <img src="data:image/png;base64,..." /> */
+  qrCodeBase64: string;
+  /** Link da página do Mercado Pago para pagar (opcional) */
+  ticketUrl?: string;
+  amount?: number;
+  /** Status do pagamento: pending, approved, etc. */
   status?: string;
-  devMode?: boolean;
   expiresIn?: number;
+  expiresAt?: string;
   createdAt?: string;
   updatedAt?: string;
-  expiresAt?: string;
-  platformFee?: number;
 }
 
 export type CreatePixQrcodeResponse = ApiResponse<PixQrcodeData>;

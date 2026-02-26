@@ -4,23 +4,36 @@ import {
   faCopy,
   faCheck,
   faCheckCircle,
+  faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 interface PixQrCodeDisplayProps {
   pixQrcode: string;
   pixCode: string;
+  /** Link da página do Mercado Pago para pagar (opcional) */
+  ticketUrl?: string;
   timeRemaining: string;
   copied: boolean;
   onCopyCode: (e: React.MouseEvent) => void;
 }
 
+/** Converte base64 puro em data URL para <img src="..." /> */
+function toDataUrl(base64: string): string {
+  if (!base64) return "";
+  if (base64.startsWith("data:")) return base64;
+  return `data:image/png;base64,${base64}`;
+}
+
 export function PixQrCodeDisplay({
   pixQrcode,
   pixCode,
+  ticketUrl,
   timeRemaining,
   copied,
   onCopyCode,
 }: PixQrCodeDisplayProps) {
+  const qrSrc = toDataUrl(pixQrcode);
+
   return (
     <div className="space-y-6">
       {timeRemaining && (
@@ -34,14 +47,28 @@ export function PixQrCodeDisplay({
       )}
 
       <div className="bg-white p-8 rounded-2xl flex items-center justify-center shadow-2xl border-2 border-gray-200">
-        {pixQrcode && (
+        {qrSrc && (
           <img
-            src={pixQrcode}
+            src={qrSrc}
             alt="QR Code PIX"
             className="w-full max-w-[280px] h-auto"
           />
         )}
       </div>
+
+      {ticketUrl && (
+        <div className="flex justify-center">
+          <a
+            href={ticketUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-semibold bg-[#009ee3] hover:bg-[#0088c7] text-white transition-colors"
+          >
+            <FontAwesomeIcon icon={faExternalLinkAlt} className="w-4" />
+            Pagar no Mercado Pago
+          </a>
+        </div>
+      )}
 
       <div>
         <label className="block text-gray-900 text-sm font-semibold mb-3">
